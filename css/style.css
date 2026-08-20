@@ -1,0 +1,716 @@
+/* ==========================================================================
+   Understanding AI — Stylesheet
+   AS91907 Digital Technologies 3.8
+
+   DESIGN DIRECTION — Editorial / Swiss information design
+   ------------------------------------------------------
+   The reference points are printed explanatory writing: a broadsheet
+   long-read, a well-set textbook, Tufte's page layouts. The reasoning is
+   that this site is almost entirely explanatory prose, so it should be
+   built like something made to be *read*, not like a product landing page.
+
+   The rules that follow from that:
+     - Paper, not dark mode. Long reading is easier on a light ground.
+     - Serif for prose. Mono for anything that labels, numbers or indexes.
+     - Hairline rules and numbered rows instead of boxes and cards.
+     - Exactly one accent colour, used sparingly and never decoratively.
+     - No gradients, no drop shadows, no rounded corners, no icon-per-heading.
+
+   All colour pairings verified against WCAG 2.1 AA before any page was
+   built — see docs/style-guide.md and docs/check-contrast.py.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Ground */
+  --paper:      #FAF9F6;
+  --band:       #F2EFE7;   /* subtle tinted band for set-apart sections */
+
+  /* Ink — three levels only, so hierarchy stays legible */
+  --ink:        #16150F;   /* 17.37:1 on paper */
+  --ink-2:      #55524A;   /*  7.41:1 on paper */
+  --ink-3:      #6E6A60;   /*  5.12:1 on paper, 4.69:1 on band */
+
+  /* One accent. Oxide red — the colour of printers' ink, not of software. */
+  --accent:     #9C3418;   /*  6.84:1 on paper */
+
+  /* Rules */
+  --rule:       #DDD9CF;
+  --rule-mid:   #C4BFB2;
+
+  /* Type */
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono:  "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Measure — the single most important typographic decision on a text site */
+  --measure: 34rem;
+
+  /* Rhythm */
+  --gap:   1.5rem;
+  --stack: 2.5rem;
+  --bay:   5.5rem;   /* space between major sections */
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  line-height: 1.62;
+  font-weight: 380;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prose gets a proper measure and pretty wrapping. */
+p {
+  margin: 0 0 1.15em;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+h1, h2, h3 {
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+hr {
+  height: 0;
+  margin: var(--stack) 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  max-width: var(--measure);
+}
+
+::selection { background: #EADFCB; }
+
+/* Focus ring — square, to match everything else. Never removed. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.skip-link:focus { left: 1.5rem; top: 1.5rem; }
+
+/* Available to screen readers, hidden visually. Used for table captions,
+   which describe a table to assistive technology without repeating a
+   heading that is already visible above it. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Layout
+   -------------------------------------------------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1.75rem;
+}
+
+/* Two-column editorial grid: a narrow marginal column for labels and
+   metadata, and a wide column for the actual content. This is the
+   structural idea the whole site is built on. */
+.spread {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0 3rem;
+}
+@media (max-width: 800px) {
+  .spread { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
+/* A label that sits in the margin, opposite the content it names. */
+.margin-note {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: 0.55rem;
+}
+
+.section { padding-block: var(--bay); }
+.section--band {
+  background: var(--band);
+  border-block: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   4. Masthead
+   The double rule under the masthead is lifted straight from newspaper
+   practice: one hairline, a sliver of space, then a heavy rule.
+   -------------------------------------------------------------------------- */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.4rem;
+}
+
+.wordmark {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.wordmark:hover { color: var(--accent); }
+
+.masthead__rule {
+  height: 3px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+}
+
+/* --- Navigation ---------------------------------------------------------- */
+.nav__list {
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__link {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.12s, border-color 0.12s;
+}
+.nav__link:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+.nav__link[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Menu toggle — set as a word, not an icon. A ☰ glyph would be the only
+   pictogram on the entire site; a label is more consistent and clearer. */
+.nav__toggle {
+  display: none;
+  padding: 0.35rem 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .nav__toggle { display: block; }
+  .nav__list {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-bottom: 0.75rem;
+  }
+  .nav__list.is-open { display: flex; }
+  .nav__link {
+    display: block;
+    width: 100%;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.78rem;
+  }
+  .masthead__inner { flex-wrap: wrap; }
+  .nav { width: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Opening spread (hero)
+   -------------------------------------------------------------------------- */
+.opener { padding-block: 4.5rem 3.5rem; }
+
+.opener__kicker {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.6rem;
+}
+
+.opener__title {
+  font-size: clamp(2.9rem, 8.5vw, 5.6rem);
+  font-weight: 400;
+  line-height: 0.99;
+  letter-spacing: -0.028em;
+  margin: 0;
+  max-width: 15ch;
+}
+.opener__title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* The standfirst — the larger intro paragraph under a headline. */
+.standfirst {
+  margin: 2rem 0 0;
+  max-width: 40rem;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--ink-2);
+}
+
+.byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   6. Contents index — the card grid's replacement
+   Numbered rows separated by hairlines. This is how a book lists its
+   chapters, and it carries more information in less space than three
+   equally-weighted boxes.
+   -------------------------------------------------------------------------- */
+.index { border-bottom: 1px solid var(--rule); }
+
+.index__row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.15fr) 2rem;
+  align-items: baseline;
+  gap: 0 2rem;
+  padding: 1.9rem 0;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.14s;
+}
+.index__row:hover { background: rgba(156, 52, 24, 0.045); }
+
+.index__num {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  transition: color 0.14s;
+}
+.index__row:hover .index__num { color: var(--accent); }
+
+.index__title {
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.index__blurb {
+  margin: 0;
+  max-width: none;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.index__mark {
+  justify-self: end;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--ink-3);
+  transition: transform 0.14s, color 0.14s;
+}
+.index__row:hover .index__mark {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+@media (max-width: 800px) {
+  .index__row {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.4rem 1.25rem;
+    padding: 1.5rem 0;
+  }
+  .index__blurb { grid-column: 2; }
+  .index__mark  { display: none; }
+  .index__title { font-size: 1.4rem; }
+}
+
+/* --------------------------------------------------------------------------
+   7. Prose
+   -------------------------------------------------------------------------- */
+.prose > * { max-width: var(--measure); }
+
+.prose h2 {
+  margin: 3.2rem 0 1.1rem;
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+}
+.prose h2:first-child { margin-top: 0; }
+
+.prose h3 {
+  margin: 2.4rem 0 0.7rem;
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { background: rgba(156, 52, 24, 0.09); }
+
+.prose strong { font-weight: 600; }
+
+.prose ul, .prose ol {
+  max-width: var(--measure);
+  margin: 0 0 1.15em;
+  padding-left: 1.3rem;
+}
+.prose li { margin-bottom: 0.5rem; }
+.prose li::marker { color: var(--ink-3); }
+
+/* Lead paragraph — the first paragraph of a page, set slightly larger. */
+.prose .lead {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--ink-2);
+  margin-bottom: 1.6rem;
+}
+
+/* Pull quote — set in italic, hung off a heavy left rule. */
+.pullquote {
+  max-width: 30rem;
+  margin: 2.6rem 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink);
+}
+
+/* An aside set in the margin, the way a textbook annotates a page. */
+.sidenote {
+  max-width: var(--measure);
+  margin: 2.2rem 0;
+  padding: 1.2rem 1.4rem;
+  background: var(--band);
+  border-left: 2px solid var(--rule-mid);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.sidenote p { max-width: none; margin-bottom: 0.6rem; }
+.sidenote p:last-child { margin-bottom: 0; }
+.sidenote__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Defined term — used where jargon is introduced. */
+.term {
+  font-style: italic;
+  border-bottom: 1px dotted var(--rule-mid);
+}
+
+/* --------------------------------------------------------------------------
+   8. Data table — plain rules, no zebra striping
+   -------------------------------------------------------------------------- */
+.table-scroll { overflow-x: auto; margin: 2rem 0; }
+
+table {
+  width: 100%;
+  max-width: var(--measure);
+  border-collapse: collapse;
+  font-size: 0.96rem;
+}
+th, td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--rule);
+}
+th {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   9. Links and buttons
+   The primary action is a bordered word, not a filled pill.
+   -------------------------------------------------------------------------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 2.4rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.72rem 1.5rem;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.14s, color 0.14s;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+.btn--accent { border-color: var(--accent); color: var(--accent); }
+.btn--accent:hover { background: var(--accent); color: var(--paper); }
+
+/* A quieter inline "next" link. */
+.textlink {
+  font-family: var(--mono);
+  font-size: 0.73rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-mid);
+  padding-bottom: 2px;
+}
+.textlink:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   10. Page head (interior pages)
+   -------------------------------------------------------------------------- */
+.pagehead {
+  padding-block: 3.5rem 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.pagehead__num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.2rem;
+}
+.pagehead__title {
+  font-size: clamp(2.3rem, 6vw, 3.7rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  max-width: 17ch;
+}
+
+/* Status marker for pages that aren't written yet. */
+.status {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--rule-mid);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  vertical-align: 0.4em;
+}
+
+/* --------------------------------------------------------------------------
+   11. Page footer navigation — "next in the sequence"
+   -------------------------------------------------------------------------- */
+.readnext {
+  display: block;
+  margin-top: var(--bay);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--ink);
+  text-decoration: none;
+  color: inherit;
+  max-width: var(--measure);
+}
+.readnext__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.readnext__title {
+  margin-top: 0.5rem;
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+.readnext:hover .readnext__title { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   12. Colophon (footer)
+   -------------------------------------------------------------------------- */
+.colophon {
+  margin-top: var(--bay);
+  border-top: 1px solid var(--ink);
+  padding-block: 2.8rem 2.2rem;
+  background: var(--paper);
+}
+
+.colophon__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 2.5rem;
+}
+@media (max-width: 760px) {
+  .colophon__grid { grid-template-columns: 1fr 1fr; }
+  .colophon__about { grid-column: 1 / -1; }
+}
+
+.colophon__about p {
+  max-width: 26rem;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.colophon__heading {
+  margin: 0 0 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.colophon__list { margin: 0; padding: 0; list-style: none; }
+.colophon__list li { margin-bottom: 0.45rem; }
+.colophon__list a {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.colophon__list a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.colophon__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 2rem;
+  margin-top: 2.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   13. Reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Print — a text site should print cleanly
+   -------------------------------------------------------------------------- */
+@media print {
+  .masthead, .colophon, .readnext, .skip-link { display: none; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .prose > *, p { max-width: none; }
+}

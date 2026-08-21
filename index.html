@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding AI — A plain-language guide to artificial intelligence</title>
+  <meta name="description"
+        content="A plain-language guide to artificial intelligence: what it is, where it came from, where you already meet it, and which concerns about it are worth having.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===== STRUCTURAL COMPONENT: Masthead + navigation ==================
+       Reused unchanged on every page.
+       =================================================================== -->
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="index.html">Understanding&nbsp;AI</a>
+
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
+          <li><a class="nav__link" href="what-is-ai.html">What is AI</a></li>
+          <li><a class="nav__link" href="history.html">History</a></li>
+          <li><a class="nav__link" href="applications.html">Applications</a></li>
+          <li><a class="nav__link" href="ethics.html">Ethics</a></li>
+          <li><a class="nav__link" href="quiz.html">Quiz</a></li>
+          <li><a class="nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main id="main">
+
+    <!-- ===== Opening spread ========================================== -->
+    <section class="wrap opener">
+      <p class="opener__kicker">A guide in four parts</p>
+      <h1 class="opener__title">Artificial intelligence, <em>explained plainly.</em></h1>
+      <p class="standfirst">
+        AI is discussed everywhere and understood almost nowhere. This guide
+        sets out what the technology actually does — how it works, where you
+        already meet it without noticing, and which of the worries about it
+        are worth having.
+      </p>
+      <p class="byline">
+        <span>Written for NCEA Level&nbsp;3</span>
+        <span>Four sections</span>
+        <span>No prior knowledge assumed</span>
+      </p>
+    </section>
+
+    <!-- ===== Contents ================================================
+         A numbered index rather than a grid of cards: it carries more
+         information per row, and it states the reading order, which three
+         equal boxes cannot do.
+         ============================================================== -->
+    <section class="wrap section" style="padding-top:0">
+      <div class="spread">
+        <p class="margin-note">Contents</p>
+        <div class="index">
+
+          <a class="index__row" href="what-is-ai.html">
+            <span class="index__num">01</span>
+            <span class="index__title">What is AI?</span>
+            <p class="index__blurb">
+              Algorithms, training data, and what it actually means for a
+              machine to &ldquo;learn&rdquo; anything at all.
+            </p>
+            <span class="index__mark" aria-hidden="true">&rarr;</span>
+          </a>
+
+          <a class="index__row" href="history.html">
+            <span class="index__num">02</span>
+            <span class="index__title">A short history</span>
+            <p class="index__blurb">
+              From Turing&rsquo;s question in 1950, through two long winters,
+              to the systems people now use daily.
+            </p>
+            <span class="index__mark" aria-hidden="true">&rarr;</span>
+          </a>
+
+          <a class="index__row" href="applications.html">
+            <span class="index__num">03</span>
+            <span class="index__title">Where you meet it</span>
+            <p class="index__blurb">
+              Recommendation systems, chatbots and driver assistance — the AI
+              already embedded in ordinary software.
+            </p>
+            <span class="index__mark" aria-hidden="true">&rarr;</span>
+          </a>
+
+          <a class="index__row" href="ethics.html">
+            <span class="index__num">04</span>
+            <span class="index__title">The harder questions</span>
+            <p class="index__blurb">
+              Bias, privacy, work, and misinformation — why building AI well
+              is not only a technical problem.
+            </p>
+            <span class="index__mark" aria-hidden="true">&rarr;</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Editorial note ========================================== -->
+    <section class="section section--band">
+      <div class="wrap spread">
+        <p class="margin-note">About this guide</p>
+        <div class="prose">
+          <p>
+            Most writing about artificial intelligence falls into one of two
+            traps. It either treats AI as an incomprehensible force that is
+            about to arrive and change everything, or it dismisses the whole
+            field as marketing. Neither is much use if you simply want to know
+            what the software on your phone is doing.
+          </p>
+
+          <p class="pullquote">
+            The useful question is not whether machines can think, but what
+            these particular systems can and cannot do.
+          </p>
+
+          <p>
+            So this guide takes a narrower approach. Every term is defined
+            where it first appears. Every claim is one that could be checked.
+            Where something is genuinely uncertain or disputed, it says so
+            rather than picking a side and presenting it as settled.
+          </p>
+
+          <p>
+            The four sections are ordered so that each builds on the one
+            before it, but they can be read in any order — anything that
+            depends on an idea explained elsewhere links back to it.
+          </p>
+
+          <p style="margin-bottom:0">
+            <a class="textlink" href="what-is-ai.html">Begin with section 01 &rarr;</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== STRUCTURAL COMPONENT: Colophon (footer) =====================
+       Reused unchanged on every page.
+       =================================================================== -->
+  <footer class="colophon">
+    <div class="wrap">
+      <div class="colophon__grid">
+
+        <div class="colophon__about">
+          <h2 class="colophon__heading">Understanding AI</h2>
+          <p>
+            A student-built guide to artificial intelligence, written for
+            NCEA Level&nbsp;3 Digital Technologies (AS91907). Built as plain
+            HTML and CSS, with no frameworks.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="colophon__heading">Sections</h2>
+          <ul class="colophon__list">
+            <li><a href="what-is-ai.html">01 &mdash; What is AI?</a></li>
+            <li><a href="history.html">02 &mdash; A short history</a></li>
+            <li><a href="applications.html">03 &mdash; Where you meet it</a></li>
+            <li><a href="ethics.html">04 &mdash; The harder questions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="colophon__heading">Elsewhere</h2>
+          <ul class="colophon__list">
+            <li><a href="quiz.html">Test yourself</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://github.com/realistkrook/AS91907">Source on GitHub</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="colophon__foot">
+        <span>&copy; 2026 Understanding AI</span>
+        <span>Set in Newsreader &amp; IBM Plex Mono</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

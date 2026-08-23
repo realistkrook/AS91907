@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is AI? — Understanding AI</title>
+  <meta name="description"
+        content="A plain-language explanation of artificial intelligence: algorithms, machine learning, training data, and what it means for a machine to learn.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="index.html">Understanding&nbsp;AI</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="index.html">Home</a></li>
+          <li><a class="nav__link" href="what-is-ai.html" aria-current="page">What is AI</a></li>
+          <li><a class="nav__link" href="history.html">History</a></li>
+          <li><a class="nav__link" href="applications.html">Applications</a></li>
+          <li><a class="nav__link" href="ethics.html">Ethics</a></li>
+          <li><a class="nav__link" href="quiz.html">Quiz</a></li>
+          <li><a class="nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main id="main">
+
+    <div class="wrap pagehead">
+      <p class="pagehead__num">Section 01</p>
+      <h1 class="pagehead__title">What is AI?</h1>
+    </div>
+
+    <section class="wrap section">
+      <div class="spread">
+        <p class="margin-note">01 &mdash; Definitions</p>
+        <div class="prose">
+
+          <p class="lead">
+            &ldquo;Artificial intelligence&rdquo; is a label attached to a very
+            wide range of software, much of which has little in common. It is
+            worth separating what the phrase suggests from what the systems
+            actually do.
+          </p>
+
+          <p>
+            The broadest useful definition is this: <strong>AI is software that
+            performs tasks which normally require human judgement</strong> —
+            recognising a face, translating a sentence, recommending a film,
+            deciding whether a transaction looks fraudulent. What counts as AI
+            has always shifted. Optical character recognition was considered
+            artificial intelligence in the 1970s; today it is just the thing
+            your phone does when it reads a receipt.
+          </p>
+
+          <p>
+            That drift is worth noticing. It means AI is partly a moving
+            target, defined as much by what still feels impressive as by any
+            fixed technical property.
+          </p>
+
+          <h2>Algorithms, and why they are not the interesting part</h2>
+
+          <p>
+            An <span class="term">algorithm</span> is simply a fixed sequence
+            of steps for solving a problem. A recipe is an algorithm. So is
+            the method you were taught for long division. Ordinary software is
+            built almost entirely from algorithms that a person wrote out
+            explicitly: <em>if this, then that</em>.
+          </p>
+
+          <p>
+            This works well when the rules can actually be written down. Payroll
+            software, a calculator, a booking system — these are all rule-based
+            and none of them are AI. The rules are known in advance, and a
+            programmer can state them.
+          </p>
+
+          <p>
+            The difficulty arrives with problems where nobody can state the
+            rules. Consider writing instructions to tell a cat from a dog in a
+            photograph. You recognise the difference instantly, but try to put
+            it into steps precise enough for a computer and the task collapses.
+            Ear shape? Some dogs have pointed ears. Size? You cannot tell size
+            from a photo. Whiskers? Both have them.
+          </p>
+
+          <p class="pullquote">
+            Machine learning exists because there is a large class of problems
+            humans can solve but cannot explain.
+          </p>
+
+          <h2>Machine learning: examples instead of rules</h2>
+
+          <p>
+            <span class="term">Machine learning</span> inverts the usual
+            approach. Rather than writing the rules, you supply a large number
+            of worked examples and let the system derive the rules itself.
+          </p>
+
+          <p>
+            To build a cat-and-dog classifier, you assemble many thousands of
+            photographs, each already labelled &ldquo;cat&rdquo; or
+            &ldquo;dog&rdquo;. This labelled collection is the
+            <span class="term">training data</span>. The system makes a guess
+            at each image, is told whether it was right, and adjusts itself
+            slightly in whichever direction would have produced a better
+            answer. Repeat this several million times and the adjustments
+            accumulate into something that classifies new, unseen photographs
+            fairly reliably.
+          </p>
+
+          <div class="sidenote">
+            <span class="sidenote__label">A caution about the word "learning"</span>
+            <p>
+              Nothing here resembles learning in the human sense. There is no
+              understanding of cats, no concept of an animal, no curiosity.
+              What is happening is statistical: numbers inside the system are
+              nudged repeatedly until its outputs match the labels more often.
+            </p>
+            <p>
+              The vocabulary of the field — learning, training, neural,
+              intelligence, hallucination — is borrowed from human cognition
+              and consistently oversells what is going on. It is useful
+              shorthand, but it is shorthand.
+            </p>
+          </div>
+
+          <h2>Neural networks</h2>
+
+          <p>
+            A <span class="term">neural network</span> is the structure most
+            modern machine learning uses. It is loosely — very loosely —
+            inspired by neurons in a brain.
+          </p>
+
+          <p>
+            Picture a large set of simple units arranged in layers. Each unit
+            receives numbers, multiplies them by its own set of
+            <span class="term">weights</span>, adds the results together, and
+            passes the total to the next layer. The first layer receives the
+            raw input, such as the brightness of each pixel. The last layer
+            produces the answer. Training means adjusting those weights, of
+            which a large model may have billions.
+          </p>
+
+          <p>
+            The word &ldquo;deep&rdquo; in <span class="term">deep
+            learning</span> refers to nothing more mysterious than having many
+            layers.
+          </p>
+
+          <h2>Three kinds of learning</h2>
+
+          <p>
+            Almost everything described as AI falls into one of three training
+            approaches, distinguished by what the system is given.
+          </p>
+
+          <div class="table-scroll">
+            <table>
+              <caption class="visually-hidden">Three approaches to machine learning</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Approach</th>
+                  <th scope="col">What it is given</th>
+                  <th scope="col">Typical use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Supervised</td>
+                  <td>Examples with correct answers attached</td>
+                  <td>Spam filters, medical image screening</td>
+                </tr>
+                <tr>
+                  <td>Unsupervised</td>
+                  <td>Data with no answers; it finds structure itself</td>
+                  <td>Grouping customers by buying patterns</td>
+                </tr>
+                <tr>
+                  <td>Reinforcement</td>
+                  <td>A goal, and a score after each attempt</td>
+                  <td>Game-playing systems, robot control</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>What about ChatGPT?</h2>
+
+          <p>
+            Large language models are the systems most people now mean by
+            &ldquo;AI&rdquo;. They are neural networks trained on an enormous
+            quantity of text, and the task they are trained on is narrower than
+            most people assume: <strong>predict which word comes next</strong>.
+          </p>
+
+          <p>
+            Given &ldquo;the capital of France is&rdquo;, the model produces a
+            probability for every word it knows, and &ldquo;Paris&rdquo; scores
+            highest. Do that repeatedly, feeding each new word back in, and
+            paragraphs emerge.
+          </p>
+
+          <p>
+            This explains a great deal about how these systems behave. They are
+            fluent because fluency is precisely what they optimise for. They
+            state false things confidently because nothing in next-word
+            prediction distinguishes true statements from plausible ones. And
+            they have no way to check a claim against the world, because they
+            were never connected to it — only to text describing it.
+          </p>
+
+          <div class="sidenote">
+            <span class="sidenote__label">Terms introduced in this section</span>
+            <p>
+              <strong>Algorithm</strong> — a fixed sequence of steps for solving
+              a problem.<br>
+              <strong>Machine learning</strong> — deriving rules from examples
+              rather than being given them.<br>
+              <strong>Training data</strong> — the labelled examples a system
+              learns from.<br>
+              <strong>Neural network</strong> — layered units that transform
+              numbers, used for most modern machine learning.<br>
+              <strong>Weights</strong> — the adjustable numbers inside a network
+              that training modifies.<br>
+              <strong>Deep learning</strong> — machine learning using networks
+              with many layers.
+            </p>
+          </div>
+
+          <a class="readnext" href="history.html">
+            <span class="readnext__label">Next &mdash; Section 02</span>
+            <span class="readnext__title">A short history</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <div class="wrap">
+      <div class="colophon__grid">
+        <div class="colophon__about">
+          <h2 class="colophon__heading">Understanding AI</h2>
+          <p>
+            A student-built guide to artificial intelligence, written for
+            NCEA Level&nbsp;3 Digital Technologies (AS91907). Built as plain
+            HTML and CSS, with no frameworks.
+          </p>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Sections</h2>
+          <ul class="colophon__list">
+            <li><a href="what-is-ai.html">01 &mdash; What is AI?</a></li>
+            <li><a href="history.html">02 &mdash; A short history</a></li>
+            <li><a href="applications.html">03 &mdash; Where you meet it</a></li>
+            <li><a href="ethics.html">04 &mdash; The harder questions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Elsewhere</h2>
+          <ul class="colophon__list">
+            <li><a href="quiz.html">Test yourself</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://github.com/realistkrook/AS91907">Source on GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="colophon__foot">
+        <span>&copy; 2026 Understanding AI</span>
+        <span>Set in Newsreader &amp; IBM Plex Mono</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

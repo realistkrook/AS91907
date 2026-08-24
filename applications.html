@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where you meet it — Understanding AI</title>
+  <meta name="description"
+        content="Real-world applications of artificial intelligence: recommendation systems, chatbots, driver assistance, and the AI already embedded in ordinary software.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="index.html">Understanding&nbsp;AI</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="index.html">Home</a></li>
+          <li><a class="nav__link" href="what-is-ai.html">What is AI</a></li>
+          <li><a class="nav__link" href="history.html">History</a></li>
+          <li><a class="nav__link" href="applications.html" aria-current="page">Applications</a></li>
+          <li><a class="nav__link" href="ethics.html">Ethics</a></li>
+          <li><a class="nav__link" href="quiz.html">Quiz</a></li>
+          <li><a class="nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main id="main">
+
+    <div class="wrap pagehead">
+      <p class="pagehead__num">Section 03</p>
+      <h1 class="pagehead__title">Where you meet it</h1>
+    </div>
+
+    <section class="wrap section">
+      <div class="spread">
+        <p class="margin-note">03 &mdash; Applications</p>
+        <div class="prose">
+
+          <p class="lead">
+            Most encounters with artificial intelligence are unremarkable. It is
+            not a robot or an assistant; it is a ranking step inside an app you
+            were already using.
+          </p>
+
+          <p>
+            The examples below were chosen because they are ordinary. Each one
+            also shows a different shape of the same underlying idea described
+            in <a href="what-is-ai.html">section 01</a>: a system trained on
+            examples, producing a prediction.
+          </p>
+
+          <h2>Recommendation systems</h2>
+
+          <p>
+            This is almost certainly the AI you use most. Every ordered feed —
+            YouTube&rsquo;s suggestions, Spotify&rsquo;s weekly playlist, a
+            shopping site&rsquo;s &ldquo;you might also like&rdquo; — is a
+            recommendation system deciding what to show and in what order.
+          </p>
+
+          <p>
+            The common technique is <span class="term">collaborative
+            filtering</span>, and the principle is simple: find people whose
+            past behaviour resembles yours, then suggest things they liked
+            which you have not encountered. The system needs no understanding
+            of the music or the film. It only needs the pattern of what tends
+            to be enjoyed together.
+          </p>
+
+          <div class="sidenote">
+            <span class="sidenote__label">Why recommendations narrow over time</span>
+            <p>
+              A recommender is optimised for engagement, not for breadth. If
+              you watch one video on a topic, similar videos are promoted,
+              which makes you more likely to watch another, which promotes
+              more of the same.
+            </p>
+            <p>
+              The loop is not a malfunction — the system is doing exactly what
+              it was built to do. Whether that is what the user wanted is a
+              separate question, taken up in
+              <a href="ethics.html">section 04</a>.
+            </p>
+          </div>
+
+          <h2>Chatbots and language models</h2>
+
+          <p>
+            Language models generate text by repeatedly predicting the next
+            word. Their practical strength is anything where fluent, plausible
+            language is the actual goal: drafting, summarising, rewording,
+            translating, explaining code.
+          </p>
+
+          <p>
+            Their weakness follows from the same mechanism. A model produces
+            what <em>reads</em> correctly, which is not the same as what
+            <em>is</em> correct. When it states a false fact in confident
+            prose, this is often called a
+            <span class="term">hallucination</span> — a misleading term, since
+            it implies an unusual failure. Producing plausible text is the
+            normal operation; sometimes the plausible text happens to be true.
+          </p>
+
+          <p class="pullquote">
+            A language model is a very good writer and an unreliable witness.
+            The two are not in tension — they are the same property.
+          </p>
+
+          <h2>Computer vision</h2>
+
+          <p>
+            <span class="term">Computer vision</span> covers anything that
+            interprets images: unlocking a phone by face, reading a licence
+            plate, flagging a suspicious region on a medical scan, sorting
+            recycling on a conveyor.
+          </p>
+
+          <p>
+            Medical imaging is the case worth dwelling on, because it shows
+            where these systems fit best. A model trained on a large archive of
+            scans can flag areas for review faster and more consistently than a
+            tired human. It does not diagnose. It narrows what a radiologist
+            looks at first. The pattern — <strong>AI as a filter in front of a
+            human decision, rather than a replacement for it</strong> — is the
+            most common successful deployment.
+          </p>
+
+          <h2>Driver assistance</h2>
+
+          <p>
+            &ldquo;Self-driving car&rdquo; describes a spectrum rather than a
+            single capability. Features already common in new cars — lane
+            keeping, adaptive cruise control, automatic emergency braking — use
+            computer vision and sensors to assist a driver who stays
+            responsible.
+          </p>
+
+          <p>
+            Full autonomy, with no human attention required in any conditions,
+            has proved considerably harder than expected. The reason is
+            instructive: driving is mostly routine, and machine learning is good
+            at routine. The difficulty is the rare case — an unusual obstacle, a
+            hand signal from a police officer, unfamiliar roadworks. Rare cases
+            are by definition scarce in training data, and it is precisely in
+            rare cases that the cost of being wrong is highest.
+          </p>
+
+          <h2>What the examples have in common</h2>
+
+          <div class="table-scroll">
+            <table>
+              <caption class="visually-hidden">Applications compared by task and consequence of error</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Application</th>
+                  <th scope="col">Underlying task</th>
+                  <th scope="col">Cost of being wrong</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Recommendations</td>
+                  <td>Rank items by predicted interest</td>
+                  <td>Low &mdash; a poor suggestion</td>
+                </tr>
+                <tr>
+                  <td>Language models</td>
+                  <td>Predict the next word</td>
+                  <td>Varies &mdash; depends on whether anyone checks</td>
+                </tr>
+                <tr>
+                  <td>Medical imaging</td>
+                  <td>Classify regions of an image</td>
+                  <td>High &mdash; mitigated by human review</td>
+                </tr>
+                <tr>
+                  <td>Driver assistance</td>
+                  <td>Detect objects, predict motion</td>
+                  <td>Severe &mdash; and immediate</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Every row is a prediction learned from examples. What differs is the
+            consequence of a wrong prediction, and how much human judgement sits
+            between the output and the outcome. That, rather than technical
+            sophistication, is usually what determines whether a deployment is
+            sensible.
+          </p>
+
+          <a class="readnext" href="ethics.html">
+            <span class="readnext__label">Next &mdash; Section 04</span>
+            <span class="readnext__title">The harder questions</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <div class="wrap">
+      <div class="colophon__grid">
+        <div class="colophon__about">
+          <h2 class="colophon__heading">Understanding AI</h2>
+          <p>
+            A student-built guide to artificial intelligence, written for
+            NCEA Level&nbsp;3 Digital Technologies (AS91907). Built as plain
+            HTML and CSS, with no frameworks.
+          </p>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Sections</h2>
+          <ul class="colophon__list">
+            <li><a href="what-is-ai.html">01 &mdash; What is AI?</a></li>
+            <li><a href="history.html">02 &mdash; A short history</a></li>
+            <li><a href="applications.html">03 &mdash; Where you meet it</a></li>
+            <li><a href="ethics.html">04 &mdash; The harder questions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Elsewhere</h2>
+          <ul class="colophon__list">
+            <li><a href="quiz.html">Test yourself</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://github.com/realistkrook/AS91907">Source on GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="colophon__foot">
+        <span>&copy; 2026 Understanding AI</span>
+        <span>Set in Newsreader &amp; IBM Plex Mono</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

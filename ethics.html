@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The harder questions — Understanding AI</title>
+  <meta name="description"
+        content="The ethics of artificial intelligence: algorithmic bias, privacy, the effect on work, and misinformation — and why these are not only technical problems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="index.html">Understanding&nbsp;AI</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="index.html">Home</a></li>
+          <li><a class="nav__link" href="what-is-ai.html">What is AI</a></li>
+          <li><a class="nav__link" href="history.html">History</a></li>
+          <li><a class="nav__link" href="applications.html">Applications</a></li>
+          <li><a class="nav__link" href="ethics.html" aria-current="page">Ethics</a></li>
+          <li><a class="nav__link" href="quiz.html">Quiz</a></li>
+          <li><a class="nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main id="main">
+
+    <div class="wrap pagehead">
+      <p class="pagehead__num">Section 04</p>
+      <h1 class="pagehead__title">The harder questions</h1>
+    </div>
+
+    <section class="wrap section">
+      <div class="spread">
+        <p class="margin-note">04 &mdash; Ethics</p>
+        <div class="prose">
+
+          <p class="lead">
+            The debate about AI tends to be conducted at two unhelpful extremes:
+            distant speculation about machines that overthrow humanity, and
+            flat denial that anything has changed. The problems worth attention
+            are less dramatic than the first and considerably more real than
+            the second.
+          </p>
+
+          <p>
+            Four are set out below. None has a settled answer. Where reasonable
+            people disagree, this page says so rather than presenting one
+            position as concluded.
+          </p>
+
+          <h2>Bias</h2>
+
+          <p>
+            A system trained on examples inherits whatever patterns those
+            examples contain, including patterns nobody intended it to learn.
+            If a company&rsquo;s past hiring favoured one group, a model
+            trained on that hiring history will treat the characteristics of
+            that group as indicators of a good candidate.
+          </p>
+
+          <p>
+            The mechanism deserves care. The model is not prejudiced; it has no
+            beliefs. It has correctly identified a pattern in real data. The
+            problem is that <strong>the pattern encoded a past injustice, and
+            applying it forward repeats that injustice at scale</strong> — now
+            with the appearance of mathematical objectivity.
+          </p>
+
+          <p class="pullquote">
+            An unfair decision made by a person can be questioned. The same
+            decision made by a system is often treated as a measurement.
+          </p>
+
+          <p>
+            Removing the obvious attribute rarely fixes this. Delete gender
+            from the data and a model may still infer it from a sports club, a
+            school, or a gap in employment. These stand-ins are called
+            <span class="term">proxy variables</span>, and finding them is
+            difficult precisely because nobody chose them.
+          </p>
+
+          <div class="sidenote">
+            <span class="sidenote__label">Where the disagreement lies</span>
+            <p>
+              There is broad agreement that biased outputs are a genuine
+              problem. There is no agreement on what fairness should mean in
+              practice.
+            </p>
+            <p>
+              Equal acceptance rates across groups, equal error rates, and
+              equal treatment of similar individuals are all defensible
+              definitions — and it has been shown that they cannot generally
+              all be satisfied at once. Choosing between them is an ethical
+              decision, not a technical one, and it is frequently made by
+              default rather than deliberately.
+            </p>
+          </div>
+
+          <h2>Privacy</h2>
+
+          <p>
+            Machine learning needs data, and the most valuable data is often
+            about people. Two distinct concerns get run together here.
+          </p>
+
+          <p>
+            The first is <strong>collection</strong>: what was gathered, whether
+            consent was meaningful, and whether &ldquo;agreeing&rdquo; to an
+            unread policy in order to use a service counts as a choice.
+          </p>
+
+          <p>
+            The second is <strong>inference</strong>, and it is the less
+            obvious of the two. Systems can derive information you never
+            supplied. Purchase timing can suggest a pregnancy; typing patterns
+            can indicate a neurological condition; location history reveals
+            religious observance. None of this was disclosed. It was
+            reconstructed — which means consent to collection is not the same
+            as consent to what can be worked out afterwards.
+          </p>
+
+          <h2>Work</h2>
+
+          <p>
+            Automation has displaced work before, and the pattern has usually
+            been substitution of tasks rather than wholesale elimination of
+            jobs. Cash machines did not end bank employment; they changed what
+            branch staff did.
+          </p>
+
+          <p>
+            What may differ this time is the target. Earlier automation mostly
+            affected physical and routine work. Current systems are strongest at
+            tasks involving language and pattern recognition — drafting,
+            summarising, first-pass translation, routine code, initial customer
+            contact. That is a large share of entry-level professional work,
+            which is also how people have traditionally gained the experience to
+            do senior work.
+          </p>
+
+          <p>
+            The honest position is that the scale and speed are genuinely
+            uncertain. Confident predictions in either direction — mass
+            unemployment, or simply more jobs than before — are running ahead of
+            the evidence.
+          </p>
+
+          <h2>Misinformation</h2>
+
+          <p>
+            Convincing fake text, images, audio and video can now be produced
+            cheaply and at volume. Fabrication is not new; the change is in
+            cost and quantity.
+          </p>
+
+          <p>
+            The most-discussed risk is people being deceived by a fake. The more
+            corrosive one may be the reverse: once anything <em>could</em> be
+            fabricated, genuine evidence becomes deniable. A recording of real
+            wrongdoing can simply be dismissed as synthetic. The damage is done
+            not by any particular forgery but by the general erosion of the
+            assumption that evidence means something.
+          </p>
+
+          <h2>Who is responsible?</h2>
+
+          <p>
+            A recurring difficulty runs through all four problems. When an
+            automated decision causes harm, responsibility is unusually easy to
+            disperse.
+          </p>
+
+          <p>
+            The engineers built a general tool. The company deployed it within
+            its stated limits. The operator followed the recommendation. The
+            model cannot be held responsible in any meaningful sense. Everyone
+            acted reasonably given their own position, and the harm still
+            occurred.
+          </p>
+
+          <p>
+            This is sometimes called the <span class="term">accountability
+            gap</span>, and it is arguably the central ethical question, because
+            it determines whether any of the others can actually be remedied. A
+            harm nobody is answerable for is a harm that tends to persist.
+          </p>
+
+          <div class="sidenote">
+            <span class="sidenote__label">Questions worth carrying forward</span>
+            <p>
+              When a system makes a decision about you, are you entitled to an
+              explanation? To appeal it to a person?
+            </p>
+            <p>
+              Should the people whose work trained a model have a claim on what
+              it produces?
+            </p>
+            <p>
+              Who should decide which definition of fairness a system is built
+              around &mdash; and should that choice be published?
+            </p>
+          </div>
+
+          <a class="readnext" href="quiz.html">
+            <span class="readnext__label">Next</span>
+            <span class="readnext__title">Test yourself</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <div class="wrap">
+      <div class="colophon__grid">
+        <div class="colophon__about">
+          <h2 class="colophon__heading">Understanding AI</h2>
+          <p>
+            A student-built guide to artificial intelligence, written for
+            NCEA Level&nbsp;3 Digital Technologies (AS91907). Built as plain
+            HTML and CSS, with no frameworks.
+          </p>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Sections</h2>
+          <ul class="colophon__list">
+            <li><a href="what-is-ai.html">01 &mdash; What is AI?</a></li>
+            <li><a href="history.html">02 &mdash; A short history</a></li>
+            <li><a href="applications.html">03 &mdash; Where you meet it</a></li>
+            <li><a href="ethics.html">04 &mdash; The harder questions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="colophon__heading">Elsewhere</h2>
+          <ul class="colophon__list">
+            <li><a href="quiz.html">Test yourself</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://github.com/realistkrook/AS91907">Source on GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="colophon__foot">
+        <span>&copy; 2026 Understanding AI</span>
+        <span>Set in Newsreader &amp; IBM Plex Mono</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nav trial — Option A: full link row</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* TRIAL PAGE ONLY — forces the full link row at every width so Option A
+       can be judged on its own terms, without the responsive collapse from
+       the main stylesheet interfering with the comparison. */
+    .nav__toggle { display: none !important; }
+    .nav__list {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap;
+      gap: 1.4rem !important;
+      padding-bottom: 0 !important;
+    }
+    .nav__link {
+      width: auto !important;
+      display: inline !important;
+      padding-block: 0 !important;
+      border-bottom: 1px solid transparent !important;
+    }
+    .trialbar {
+      padding: 0.7rem 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="trialbar"><div class="wrap">Trial &mdash; Option A &mdash; full link row, always visible</div></div>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="#">Understanding&nbsp;AI</a>
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#" aria-current="page">Home</a></li>
+          <li><a class="nav__link" href="#">What is AI</a></li>
+          <li><a class="nav__link" href="#">History</a></li>
+          <li><a class="nav__link" href="#">Applications</a></li>
+          <li><a class="nav__link" href="#">Ethics</a></li>
+          <li><a class="nav__link" href="#">Quiz</a></li>
+          <li><a class="nav__link" href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main class="wrap section">
+    <div class="spread">
+      <p class="margin-note">Option A</p>
+      <div class="prose">
+        <h1 style="font-size:2.6rem;font-weight:400;letter-spacing:-0.02em;margin-bottom:1.5rem">
+          Full link row
+        </h1>
+
+        <p class="lead">
+          All seven destinations sit in one always-visible row. Nothing is
+          hidden, so the size and shape of the site is obvious the moment the
+          page loads.
+        </p>
+
+        <h2>What to check</h2>
+        <ul>
+          <li>Can a first-time visitor see every page without clicking?</li>
+          <li>Narrow the window. Do the links wrap awkwardly or crowd the wordmark?</li>
+          <li>At phone width, how much vertical space has the header eaten?</li>
+        </ul>
+
+        <h2>The task to set testers</h2>
+        <p>
+          Give each tester the same instruction &mdash; <em>&ldquo;find the page
+          about the history of AI&rdquo;</em> &mdash; and time them. Record the
+          result in <code>docs/nav-trial-notes.md</code>.
+        </p>
+
+        <p><a class="textlink" href="nav-option-b.html">Compare with Option B &rarr;</a></p>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nav trial — Option B: menu toggle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* TRIAL PAGE ONLY — forces the collapsed menu at every width, including
+       desktop, so Option B can be judged as a standalone approach rather
+       than only as the narrow-screen fallback. */
+    .nav__toggle { display: block !important; }
+    .nav { width: 100%; }
+    .masthead__inner { flex-wrap: wrap; }
+    .nav__list {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding-bottom: 0.75rem;
+    }
+    .nav__list.is-open { display: flex; }
+    .nav__link {
+      display: block;
+      width: 100%;
+      padding-block: 0.7rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.78rem;
+    }
+    .trialbar {
+      padding: 0.7rem 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="trialbar"><div class="wrap">Trial &mdash; Option B &mdash; links hidden behind a menu toggle</div></div>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="wordmark" href="#">Understanding&nbsp;AI</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav__list" id="nav-menu">
+          <li><a class="nav__link" href="#" aria-current="page">Home</a></li>
+          <li><a class="nav__link" href="#">What is AI</a></li>
+          <li><a class="nav__link" href="#">History</a></li>
+          <li><a class="nav__link" href="#">Applications</a></li>
+          <li><a class="nav__link" href="#">Ethics</a></li>
+          <li><a class="nav__link" href="#">Quiz</a></li>
+          <li><a class="nav__link" href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="masthead__rule" role="presentation"></div>
+
+  <main class="wrap section">
+    <div class="spread">
+      <p class="margin-note">Option B</p>
+      <div class="prose">
+        <h1 style="font-size:2.6rem;font-weight:400;letter-spacing:-0.02em;margin-bottom:1.5rem">
+          Menu toggle
+        </h1>
+
+        <p class="lead">
+          Every destination is hidden behind the <strong>Menu</strong> button.
+          The header stays exactly the same height at any screen size, but the
+          structure of the site is invisible until someone opens it.
+        </p>
+
+        <h2>What to check</h2>
+        <ul>
+          <li>Does a first-time visitor realise there are seven pages at all?</li>
+          <li>Reaching any page now takes two actions instead of one.</li>
+          <li>Does the header feel calmer, or does it feel like something is missing?</li>
+        </ul>
+
+        <h2>The task to set testers</h2>
+        <p>
+          Same instruction as Option A &mdash; <em>&ldquo;find the page about
+          the history of AI&rdquo;</em> &mdash; timed. The difference between
+          the two timings is the single most useful number this trial produces.
+        </p>
+
+        <p><a class="textlink" href="nav-option-a.html">&larr; Compare with Option A</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/nav.js"></script>
+</body>
+</html>

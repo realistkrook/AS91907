@@ -1,0 +1,30 @@
+{
+ "turing": {
+  "title": "Alan Turing Aged 16.jpg",
+  "licence": "Public domain",
+  "licenceUrl": "",
+  "artist": "Possibly Arthur Reginald Chaffin (1893-1954)",
+  "descUrl": "https://commons.wikimedia.org/wiki/File:Alan_Turing_Aged_16.jpg"
+ },
+ "eniac": {
+  "title": "ENIAC Penn1.jpg",
+  "licence": "CC BY-SA 3.0",
+  "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": "The original uploader was TexasDex at English Wikipedia.",
+  "descUrl": "https://commons.wikimedia.org/wiki/File:ENIAC_Penn1.jpg"
+ },
+ "kismet": {
+  "title": "Kismet robot at MIT Museum.jpg",
+  "licence": "CC BY-SA 3.0",
+  "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": "Unknown",
+  "descUrl": "https://commons.wikimedia.org/wiki/File:Kismet_robot_at_MIT_Museum.jpg"
+ },
+ "waymo": {
+  "title": "Waymo Chrysler Pacifica in Los Altos, 2017.jpg",
+  "licence": "CC BY-SA 4.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Dllu",
+  "descUrl": "https://commons.wikimedia.org/wiki/File:Waymo_Chrysler_Pacifica_in_Los_Altos,_2017.jpg"
+ }
+}

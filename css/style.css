@@ -909,3 +909,61 @@ th {
 @media (max-width: 700px) {
   .glossary__entry { grid-template-columns: 1fr; gap: 0.4rem; }
 }
+
+/* --------------------------------------------------------------------------
+   17. Gallery
+   Figures at full measure with the caption set beneath in the margin
+   style. Attribution sits with each image rather than being collected in
+   a footnote, because CC BY-SA requires credit to travel with the work.
+   -------------------------------------------------------------------------- */
+.gallery { margin: 0; }
+
+.figure {
+  margin: 0 0 3.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+}
+.figure:first-child { padding-top: 0; border-top: 0; }
+
+.figure__num {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+/* Reserving the aspect ratio stops the page reflowing as images arrive,
+   which is a real usability problem on a slow connection. */
+.figure__frame {
+  background: var(--band);
+  border: 1px solid var(--rule);
+}
+.figure__frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.figure figcaption {
+  margin-top: 1rem;
+  max-width: 32rem;
+}
+.figure__caption {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.figure__credit {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.figure__credit a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.figure__credit a:hover { color: var(--accent); }

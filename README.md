@@ -33,19 +33,24 @@ AS91907/
 ├── what-is-ai.html       Core content page        [Milestone 3 — written]
 ├── applications.html     Core content page        [Milestone 3 — written]
 ├── ethics.html           Core content page        [Milestone 3 — written]
-├── history.html          Timeline                 [Milestone 4 — placeholder]
+├── history.html          Timeline                 [Milestone 4 — built]
+├── gallery.html          Image gallery            [Milestone 4 — built]
+├── glossary.html         16 defined terms         [Milestone 4 — built]
 ├── quiz.html             Optional add-on          [Milestone 5 — placeholder]
 ├── contact.html          Optional add-on          [Milestone 5 — placeholder]
 ├── css/style.css         All styling + design tokens
 ├── js/nav.js             Menu toggle behaviour
-├── images/               Image assets
+├── images/               4 licensed photographs + credits.json
 ├── trials/               Component trials (Merit evidence)
-│   ├── nav-option-a.html   Full link row
-│   └── nav-option-b.html   Collapsed menu
+│   ├── nav-option-a.html        Full link row
+│   ├── nav-option-b.html        Collapsed menu
+│   ├── timeline-static.html     All entries visible
+│   └── timeline-interactive.html Entries expand on click
 └── docs/
     ├── style-guide.md      Branding + verified contrast ratios
     ├── check-contrast.py   Re-runnable WCAG checker
-    └── nav-trial-notes.md  Nav trial results  ← NEEDS YOUR TESTING DATA
+    ├── nav-trial-notes.md       Nav trial   ← NEEDS YOUR TESTING DATA
+    └── timeline-trial-notes.md  Timeline trial ← NEEDS YOUR TESTING DATA
 ```
 
 Placeholder pages exist so the navigation bar has no broken links while the
@@ -61,7 +66,7 @@ replace it.
 | 1 | Planning & Design | Branding + style guide done; site map still to draw |
 | 2 | Site Foundation & Structure | **Built** — opener, nav, colophon; nav trial needs user feedback |
 | 3 | Core Content Pages | **Written** — What is AI, Applications, Ethics |
-| 4 | Enhanced Content & Interactivity | Not started — history page is a placeholder |
+| 4 | Enhanced Content & Interactivity | **Built** — timeline, gallery, glossary; timeline trial needs user feedback |
 | 5 | Optional Add-ons | Not started |
 | 6 | Quality, Accessibility & Launch | Not started |
 
@@ -82,6 +87,9 @@ which has one card per component from the decomposition table.
 | "What is AI?" page | Content | 3 |
 | "Where you meet it" page | Content | 3 |
 | "The harder questions" page | Content | 3 |
+| "History of AI" timeline | Functional | 4 |
+| Image gallery | Functional | 4 |
+| Glossary of terms | Content | 4 |
 
 ---
 
@@ -97,5 +105,7 @@ Design decisions made up front rather than retrofitted (see
 - Visible focus rings on all interactive elements.
 - `aria-current="page"` marks the active page; `aria-expanded` tracks the menu.
 - `prefers-reduced-motion` respected.
+- Descriptive alt text on every image; all four are lazy-loaded.
+- Images resampled to 1200px, cutting the gallery from 2045KB to 640KB.
 
 Full accessibility testing happens in Milestone 6.

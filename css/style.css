@@ -250,10 +250,20 @@ hr {
    pictogram on the entire site; a label is more consistent and clearer. */
 .nav__toggle {
   display: none;
-  padding: 0.35rem 0;
+  /* The tap area is 44px tall, but the negative margin cancels the padding
+     so the word sits exactly where it did. On a phone this button is the
+     only way into the navigation, so it gets the comfortable size rather
+     than WCAG's 24px minimum. The underline is text-decoration rather than
+     a border so it stays under the word instead of moving to the box edge. */
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.75rem 0.5rem;
+  margin: -0.75rem -0.5rem;
   background: none;
   border: 0;
-  border-bottom: 1px solid var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
   color: var(--ink);
   font-family: var(--mono);
   font-size: 0.72rem;

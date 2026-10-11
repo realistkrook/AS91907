@@ -36,26 +36,27 @@ AS91907/
 ├── history.html          Timeline                 [Milestone 4 — built]
 ├── gallery.html          Image gallery            [Milestone 4 — built]
 ├── glossary.html         16 defined terms         [Milestone 4 — built]
-├── quiz.html             Optional add-on          [Milestone 5 — placeholder]
-├── contact.html          Optional add-on          [Milestone 5 — placeholder]
 ├── css/style.css         All styling + design tokens
 ├── js/nav.js             Menu toggle behaviour
 ├── images/               4 licensed photographs + credits.json
+├── tests/site-check.mjs  Automated test suite      [Milestone 6]
 ├── trials/               Component trials (Merit evidence)
 │   ├── nav-option-a.html        Full link row
 │   ├── nav-option-b.html        Collapsed menu
 │   ├── timeline-static.html     All entries visible
 │   └── timeline-interactive.html Entries expand on click
 └── docs/
+    ├── implications.md          Implications discussion (Excellence)
+    ├── plan-changes.md          Every departure from the original plan
+    ├── testing/                 Test reports, content review, screenshots
     ├── style-guide.md      Branding + verified contrast ratios
     ├── check-contrast.py   Re-runnable WCAG checker
     ├── nav-trial-notes.md       Nav trial   ← NEEDS YOUR TESTING DATA
     └── timeline-trial-notes.md  Timeline trial ← NEEDS YOUR TESTING DATA
 ```
 
-Placeholder pages exist so the navigation bar has no broken links while the
-site is being built. Each is clearly labelled with the milestone that will
-replace it.
+The quiz and contact form (Milestone 5, "Could" priority) were dropped in
+favour of Milestone 6 — see [`docs/plan-changes.md`](docs/plan-changes.md).
 
 ---
 
@@ -67,8 +68,8 @@ replace it.
 | 2 | Site Foundation & Structure | **Built** — opener, nav, colophon; nav trial needs user feedback |
 | 3 | Core Content Pages | **Written** — What is AI, Applications, Ethics |
 | 4 | Enhanced Content & Interactivity | **Built** — timeline, gallery, glossary; timeline trial needs user feedback |
-| 5 | Optional Add-ons | Not started |
-| 6 | Quality, Accessibility & Launch | Not started |
+| 5 | Optional Add-ons | **Dropped** — logged as a plan change |
+| 6 | Quality, Accessibility & Launch | **Tested** — all four automated categories pass; Safari/Firefox and trials need a person |
 
 Progress is tracked on the
 [Trello board](https://trello.com/b/wx2afstC/as91907-ai-website-project),
@@ -108,4 +109,16 @@ Design decisions made up front rather than retrofitted (see
 - Descriptive alt text on every image; all four are lazy-loaded.
 - Images resampled to 1200px, cutting the gallery from 2045KB to 640KB.
 
-Full accessibility testing happens in Milestone 6.
+Verified in Milestone 6: 0 WCAG 2.2 AA violations on all 7 pages
+(axe-core), plus a keyboard walk and skip-link check on every page. See
+[`docs/testing/`](docs/testing/README.md).
+
+## Testing
+
+```bash
+node tests/site-check.mjs
+```
+
+Runs functionality, accessibility, responsive and content checks against
+every page and writes a report to `docs/testing/`. Setup and the manual
+checks still outstanding are in [`docs/testing/README.md`](docs/testing/README.md).

@@ -32,8 +32,12 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "docs", "testing");
-const SHOT_DIR = path.join(OUT_DIR, "screenshots");
-const REPORT = path.join(OUT_DIR, process.argv[2] || "test-report.md");
+const REPORT_NAME = process.argv[2] || "test-report.md";
+const REPORT = path.join(OUT_DIR, REPORT_NAME);
+// Each run keeps its own screenshots, so a later run never overwrites the
+// "before" evidence from an earlier one.
+const SHOT_SUB = REPORT_NAME.replace(/\.md$/, "");
+const SHOT_DIR = path.join(OUT_DIR, "screenshots", SHOT_SUB);
 
 const WIDTHS = [375, 768, 1280];                       // phone, tablet, desktop
 const SHOT_PAGES = ["index.html", "what-is-ai.html", "history.html", "gallery.html"];
@@ -238,6 +242,12 @@ for (const width of WIDTHS) {
         bodyPx: parseFloat(getComputedStyle(document.body).fontSize) };
     });
 
+    // screenshot the resting page before any interaction changes focus or state
+    if (SHOT_PAGES.includes(file)) {
+      await page.screenshot({ path: path.join(SHOT_DIR, `${file.replace(".html", "")}-${width}.jpg`),
+        type: "jpeg", quality: 72 });
+    }
+
     // menu behaviour, where the collapsed menu is in use
     if (m.navMode === "menu button") {
       const t = page.locator(".nav__toggle");
@@ -257,10 +267,6 @@ for (const width of WIDTHS) {
       m.menu = { toggleH: Math.round(tb.height), toggleW: Math.round(tb.width), open, closed };
     }
 
-    if (SHOT_PAGES.includes(file)) {
-      await page.screenshot({ path: path.join(SHOT_DIR, `${file.replace(".html", "")}-${width}.jpg`),
-        type: "jpeg", quality: 72 });
-    }
     (R.resp[file] ||= {})[width] = m;
   }
   await ctx.close();
@@ -325,7 +331,7 @@ const aFail = PAGES.filter((p) => { const a = R.a11y[p];
     !a.keyboard.firstIsSkip || a.keyboard.missingRing.length || !a.skipLink.inMain; });
 const rFail = PAGES.filter((p) => WIDTHS.some((w) => { const m = R.resp[p][w];
   return m.overflow > 0 || (m.menu && (m.menu.open.expanded !== "true" || !m.menu.open.listShown ||
-    m.menu.closed.expanded !== "false" || !m.menu.closed.focusOnToggle || m.menu.toggleH < 24)); }));
+    m.menu.closed.expanded !== "false" || !m.menu.closed.focusOnToggle || m.menu.toggleH < 44 || m.menu.toggleW < 44)); }));
 const cFail = PAGES.filter((p) => R.content[p].placeholders.length || R.content[p].repeated.length);
 
 push(`# Test report`, "",
@@ -383,7 +389,9 @@ if (Object.keys(bp).length) push("**Best-practice advisories** (not WCAG failure
 push("---", "", "## 3. Responsive", "",
   `Each page is loaded at ${WIDTHS.join(" / ")} px wide (phone / tablet / desktop) and checked for`,
   "horizontal scrolling. Where the collapsed menu is in use, it is opened with a click, checked,",
-  "and closed with Escape, confirming focus returns to the button.", "",
+  "and closed with Escape, confirming focus returns to the button. The menu button must be at least",
+  "44×44px: it is the only way into the navigation on a phone, so it is held to the comfortable",
+  "touch-target size rather than the WCAG 2.2 minimum of 24px.", "",
   `| Page | ${WIDTHS.map((w) => w + "px").join(" | ")} |`, `|---|${WIDTHS.map(() => "---").join("|")}|`);
 for (const p of PAGES) push(`| ${p} | ${WIDTHS.map((w) => { const m = R.resp[p][w];
   return (m.overflow > 0 ? `**overflows ${m.overflow}px**` : "fits") + ` · ${m.navMode}`; }).join(" | ")} |`);
@@ -392,8 +400,8 @@ const mm = R.resp["index.html"][375].menu;
 if (mm) push(`**Menu at 375px** (homepage): button ${mm.toggleW}×${mm.toggleH}px · opens: aria-expanded=${mm.open.expanded}, list visible=${mm.open.listShown}, label "${mm.open.label}" · smallest menu link ${Math.round(mm.open.smallestLinkPx)}px tall · Escape closes: aria-expanded=${mm.closed.expanded}, focus returned to button=${mm.closed.focusOnToggle}`, "");
 const over = PAGES.flatMap((p) => WIDTHS.filter((w) => R.resp[p][w].overflow > 0).map((w) => `- ${p} at ${w}px: ${R.resp[p][w].overflow}px too wide — ${R.resp[p][w].tooWide.join(", ")}`));
 if (over.length) push("**Overflow details:**", "", ...over, "");
-push("**Screenshots** (in `docs/testing/screenshots/`):", "",
-  ...SHOT_PAGES.map((p) => `- ${p}: ${WIDTHS.map((w) => `[${w}px](screenshots/${p.replace(".html", "")}-${w}.jpg)`).join(" · ")}`), "");
+push(`**Screenshots** (in \`docs/testing/screenshots/${SHOT_SUB}/\`):`, "",
+  ...SHOT_PAGES.map((p) => `- ${p}: ${WIDTHS.map((w) => `[${w}px](screenshots/${SHOT_SUB}/${p.replace(".html", "")}-${w}.jpg)`).join(" · ")}`), "");
 
 push("---", "", "## 4. Content", "",
   "Checks for text left over from development and accidentally repeated words. Readability is",

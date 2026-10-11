@@ -101,12 +101,12 @@ and closed with Escape, confirming focus returns to the button.
 
 **Menu at 375px** (homepage): button 32×27px · opens: aria-expanded=true, list visible=true, label "Close" · smallest menu link 44px tall · Escape closes: aria-expanded=false, focus returned to button=true
 
-**Screenshots** (in `docs/testing/screenshots/`):
+**Screenshots** (in `docs/testing/screenshots/run-1-baseline/`):
 
-- index.html: [375px](screenshots/index-375.jpg) · [768px](screenshots/index-768.jpg) · [1280px](screenshots/index-1280.jpg)
-- what-is-ai.html: [375px](screenshots/what-is-ai-375.jpg) · [768px](screenshots/what-is-ai-768.jpg) · [1280px](screenshots/what-is-ai-1280.jpg)
-- history.html: [375px](screenshots/history-375.jpg) · [768px](screenshots/history-768.jpg) · [1280px](screenshots/history-1280.jpg)
-- gallery.html: [375px](screenshots/gallery-375.jpg) · [768px](screenshots/gallery-768.jpg) · [1280px](screenshots/gallery-1280.jpg)
+- index.html: [375px](screenshots/run-1-baseline/index-375.jpg) · [768px](screenshots/run-1-baseline/index-768.jpg) · [1280px](screenshots/run-1-baseline/index-1280.jpg)
+- what-is-ai.html: [375px](screenshots/run-1-baseline/what-is-ai-375.jpg) · [768px](screenshots/run-1-baseline/what-is-ai-768.jpg) · [1280px](screenshots/run-1-baseline/what-is-ai-1280.jpg)
+- history.html: [375px](screenshots/run-1-baseline/history-375.jpg) · [768px](screenshots/run-1-baseline/history-768.jpg) · [1280px](screenshots/run-1-baseline/history-1280.jpg)
+- gallery.html: [375px](screenshots/run-1-baseline/gallery-375.jpg) · [768px](screenshots/run-1-baseline/gallery-768.jpg) · [1280px](screenshots/run-1-baseline/gallery-1280.jpg)
 
 ---
 

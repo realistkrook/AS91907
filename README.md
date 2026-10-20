@@ -7,8 +7,8 @@ to develop a digital technologies outcome."*
 Built with plain HTML, CSS and JavaScript — no frameworks and no build step, so
 any page can be opened directly in a browser.
 
-**Design direction:** editorial / Swiss information design — paper ground,
-serif prose, mono labels, hairline rules, one accent colour. The reasoning is
+**Design direction:** clean modern reading UI — cool neutral ground, Geist
+sans with a mono companion, one emerald accent, soft corners, light and dark modes. The reasoning is
 set out in [`docs/style-guide.md`](docs/style-guide.md).
 
 ---
@@ -37,6 +37,7 @@ AS91907/
 ├── gallery.html          Image gallery            [Milestone 4 — built]
 ├── glossary.html         16 defined terms         [Milestone 4 — built]
 ├── css/style.css         All styling + design tokens
+├── fonts/                Self-hosted Geist + Geist Mono, with licences
 ├── js/nav.js             Menu toggle behaviour
 ├── images/               4 licensed photographs + credits.json
 ├── tests/site-check.mjs  Automated test suite      [Milestone 6]
@@ -108,6 +109,8 @@ Design decisions made up front rather than retrofitted (see
 - `prefers-reduced-motion` respected.
 - Descriptive alt text on every image; all four are lazy-loaded.
 - Images resampled to 1200px, cutting the gallery from 2045KB to 640KB.
+- Fonts self-hosted: no page makes a request to any other domain, so no
+  visitor's IP address is shared with Google or anyone else.
 
 Verified in Milestone 6: 0 WCAG 2.2 AA violations on all 7 pages
 (axe-core), plus a keyboard walk and skip-link check on every page. See

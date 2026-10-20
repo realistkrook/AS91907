@@ -1,56 +1,135 @@
 /* ==========================================================================
-   Understanding AI — Stylesheet
+   Understanding AI - Stylesheet
    AS91907 Digital Technologies 3.8
 
-   DESIGN DIRECTION — Editorial / Swiss information design
-   ------------------------------------------------------
-   The reference points are printed explanatory writing: a broadsheet
-   long-read, a well-set textbook, Tufte's page layouts. The reasoning is
-   that this site is almost entirely explanatory prose, so it should be
-   built like something made to be *read*, not like a product landing page.
+   DESIGN DIRECTION - Clean modern reading UI
+   ------------------------------------------
+   This site is mostly explanatory prose for students, so the interface has
+   to disappear into the reading. The language is a cool neutral ground, one
+   emerald accent, a single sans family (Geist) with a mono companion for
+   numbers, soft but restrained corners, and images used as real content.
 
-   The rules that follow from that:
-     - Paper, not dark mode. Long reading is easier on a light ground.
-     - Serif for prose. Mono for anything that labels, numbers or indexes.
-     - Hairline rules and numbered rows instead of boxes and cards.
-     - Exactly one accent colour, used sparingly and never decoratively.
-     - No gradients, no drop shadows, no rounded corners, no icon-per-heading.
+   Rules that follow:
+     - Light and dark both designed. Follows the visitor's system setting.
+     - One accent colour. It marks state, links and the primary action only.
+     - One shape system: 20px for media and large surfaces, 12px for small
+       surfaces, full pill for anything you press (buttons, nav, filters).
+     - Motion carries meaning: page-load hierarchy, hover feedback, press
+       feedback and a reading-progress bar. Nothing loops. All of it stops
+       under prefers-reduced-motion.
+     - No gradients as decoration, no glows. The only gradient is the scrim
+       that keeps white text readable over a photograph.
 
-   All colour pairings verified against WCAG 2.1 AA before any page was
-   built — see docs/style-guide.md and docs/check-contrast.py.
+   All colour pairings verified against WCAG 2.1 AA in both modes - see
+   docs/style-guide.md and docs/check-contrast.py.
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Fonts - self-hosted
+   Served from this site rather than Google Fonts, so no visitor's IP address
+   is sent to a third party and the typography works offline. Both are
+   variable fonts, so one file per subset covers every weight. Latin Extended
+   carries the macron vowels (a e i o u with macrons) used in te reo Maori;
+   the browser only downloads it when a page uses one of those characters.
+   Licensed under the SIL Open Font License 1.1 (see /fonts).
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist-mono-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/geist-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* --------------------------------------------------------------------------
    1. Design tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Ground */
-  --paper:      #FAF9F6;
-  --band:       #F2EFE7;   /* subtle tinted band for set-apart sections */
+  color-scheme: light dark;
 
-  /* Ink — three levels only, so hierarchy stays legible */
-  --ink:        #16150F;   /* 17.37:1 on paper */
-  --ink-2:      #55524A;   /*  7.41:1 on paper */
-  --ink-3:      #6E6A60;   /*  5.12:1 on paper, 4.69:1 on band */
+  /* Ground and surfaces */
+  --bg:         #F5F6F7;
+  --surface:    #FBFBFC;   /* raised surfaces: cards, header */
+  --surface-2:  #ECEEF0;   /* tinted surfaces: asides, tracks */
 
-  /* One accent. Oxide red — the colour of printers' ink, not of software. */
-  --accent:     #9C3418;   /*  6.84:1 on paper */
+  /* Ink - three levels only, so hierarchy stays legible */
+  --ink:        #101214;   /* 17.35:1 on bg */
+  --ink-2:      #43494F;   /*  8.42:1 on bg */
+  --ink-3:      #5B636B;   /*  5.64:1 on bg, 5.25:1 on surface-2 */
 
-  /* Rules */
-  --rule:       #DDD9CF;
-  --rule-mid:   #C4BFB2;
+  /* One accent */
+  --accent:     #0B7A55;   /*  4.94:1 on bg */
+  --accent-ink: #F5F6F7;   /* text placed on the accent, 4.94:1 */
+  --accent-soft:#DDF0E8;   /* quiet tint of the accent for large surfaces */
+  --on-soft:    #0A5B40;   /* text on accent-soft */
+
+  /* Lines */
+  --line:       #DEE1E4;
+  --line-2:     #C5CAD0;
+
+  /* Shadows are tinted to the ground, never pure black */
+  --shadow: 0 1px 2px rgb(16 18 20 / .05), 0 12px 32px -12px rgb(16 18 20 / .14);
 
   /* Type */
-  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --mono:  "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  /* Measure — the single most important typographic decision on a text site */
-  --measure: 34rem;
+  /* Shape system */
+  --r-lg:   20px;
+  --r-md:   12px;
+  --r-pill: 999px;
 
-  /* Rhythm */
-  --gap:   1.5rem;
-  --stack: 2.5rem;
-  --bay:   5.5rem;   /* space between major sections */
+  /* Measure and rhythm */
+  --measure: 40rem;
+  --bay:     6rem;     /* space between major sections */
+  --ease:    cubic-bezier(.16, 1, .3, 1);
+
+  /* The only z-index layers: header, then skip link */
+  --z-header: 50;
+  --z-skip:   100;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:         #0D0F11;
+    --surface:    #14171A;
+    --surface-2:  #1B1F23;
+    --ink:        #ECEEEF;   /* 16.5:1 on bg */
+    --ink-2:      #B4BAC0;   /*  9.81:1 */
+    --ink-3:      #8D959D;   /*  6.33:1, 5.46:1 on surface-2 */
+    --accent:     #4FD6A3;   /* 10.5:1 */
+    --accent-ink: #07120E;   /* 10.42:1 on accent */
+    --accent-soft:#12261F;
+    --on-soft:    #7BE3BC;
+    --line:       #262B30;
+    --line-2:     #3A4148;
+    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 12px 32px -12px rgb(0 0 0 / .6);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -60,31 +139,31 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
-  font-family: var(--serif);
-  font-size: 1.1875rem;
-  line-height: 1.62;
-  font-weight: 380;
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Prose gets a proper measure and pretty wrapping. */
 p {
-  margin: 0 0 1.15em;
+  margin: 0 0 1.2em;
   max-width: var(--measure);
   text-wrap: pretty;
 }
 
 h1, h2, h3 {
-  font-weight: 500;
-  line-height: 1.14;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   margin: 0;
 }
@@ -95,38 +174,35 @@ img { max-width: 100%; height: auto; display: block; }
 
 hr {
   height: 0;
-  margin: var(--stack) 0;
+  margin: 2.5rem 0;
   border: 0;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--line);
   max-width: var(--measure);
 }
 
-::selection { background: #EADFCB; }
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-/* Focus ring — square, to match everything else. Never removed. */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .skip-link {
   position: absolute;
   left: -9999px;
-  z-index: 200;
-  padding: 0.6rem 1rem;
+  z-index: var(--z-skip);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--r-pill);
   background: var(--ink);
-  color: var(--paper);
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
 }
-.skip-link:focus { left: 1.5rem; top: 1.5rem; }
+.skip-link:focus { left: 1rem; top: 1rem; }
 
-/* Available to screen readers, hidden visually. Used for table captions,
-   which describe a table to assistive technology without repeating a
-   heading that is already visible above it. */
+/* Available to screen readers, hidden visually. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -145,512 +221,577 @@ hr {
    -------------------------------------------------------------------------- */
 .wrap {
   width: 100%;
-  max-width: 68rem;
+  max-width: 74rem;
   margin-inline: auto;
-  padding-inline: 1.75rem;
+  padding-inline: 1.5rem;
 }
 
-/* Two-column editorial grid: a narrow marginal column for labels and
-   metadata, and a wide column for the actual content. This is the
-   structural idea the whole site is built on. */
+/* Two columns: a sticky label rail and the content. On a long page the rail
+   keeps the reader oriented; it is not decoration. */
 .spread {
   display: grid;
-  grid-template-columns: 8.5rem minmax(0, 1fr);
-  gap: 0 3rem;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 0 3.5rem;
 }
 @media (max-width: 800px) {
-  .spread { grid-template-columns: 1fr; gap: 0.75rem; }
+  .spread { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
 }
 
-/* A label that sits in the margin, opposite the content it names. */
 .margin-note {
-  font-family: var(--mono);
-  font-size: 0.7rem;
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  margin: 0;
+  padding-top: 0.35rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  line-height: 1.4;
   color: var(--ink-3);
-  padding-top: 0.55rem;
+}
+@media (max-width: 800px) {
+  .margin-note { position: static; padding-top: 0; }
 }
 
 .section { padding-block: var(--bay); }
 .section--band {
-  background: var(--band);
-  border-block: 1px solid var(--rule);
+  background: var(--surface);
+  border-block: 1px solid var(--line);
 }
 
 /* --------------------------------------------------------------------------
-   4. Masthead
-   The double rule under the masthead is lifted straight from newspaper
-   practice: one hairline, a sliver of space, then a heavy rule.
+   4. Reading progress
+   A thin bar tied to scroll position. It answers "how far through am I?"
+   on long pages. Only where scroll-driven animation is supported.
+   -------------------------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--accent);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      z-index: var(--z-header);
+      pointer-events: none;
+      animation: progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes progress { to { transform: scaleX(1); } }
+
+/* --------------------------------------------------------------------------
+   5. Header and navigation
    -------------------------------------------------------------------------- */
 .masthead {
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid var(--line);
 }
+@media (prefers-reduced-transparency: reduce) {
+  .masthead { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+.masthead__rule { display: none; }
 
 .masthead__inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-block: 1.4rem;
+  min-height: 4rem;
 }
 
 .wordmark {
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
   text-decoration: none;
   white-space: nowrap;
 }
-.wordmark:hover { color: var(--accent); }
 
-.masthead__rule {
-  height: 3px;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  background: transparent;
-}
-
-/* --- Navigation ---------------------------------------------------------- */
 .nav__list {
   display: flex;
-  align-items: baseline;
-  gap: 1.4rem;
+  align-items: center;
+  gap: 0.15rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .nav__link {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  display: block;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--r-pill);
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--ink-2);
   text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
-  transition: color 0.12s, border-color 0.12s;
+  white-space: nowrap;
+  transition: color .2s var(--ease), background-color .2s var(--ease);
 }
-.nav__link:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
-}
+.nav__link:hover { color: var(--ink); background: var(--surface-2); }
 .nav__link[aria-current="page"] {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  color: var(--on-soft);
+  background: var(--accent-soft);
 }
 
-/* Menu toggle — set as a word, not an icon. A ☰ glyph would be the only
-   pictogram on the entire site; a label is more consistent and clearer. */
 .nav__toggle {
   display: none;
-  /* The tap area is 44px tall, but the negative margin cancels the padding
-     so the word sits exactly where it did. On a phone this button is the
-     only way into the navigation, so it gets the comfortable size rather
-     than WCAG's 24px minimum. The underline is text-decoration rather than
-     a border so it stays under the word instead of moving to the box edge. */
   min-height: 44px;
   min-width: 44px;
-  padding: 0.75rem 0.5rem;
-  margin: -0.75rem -0.5rem;
-  background: none;
-  border: 0;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.35em;
+  padding: 0 1rem;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
+  background: var(--surface);
   color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
 }
+.nav__toggle:active { transform: scale(.97); }
 
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .nav__toggle { display: block; }
+  .nav { position: absolute; inset: 100% 0 auto 0; }
   .nav__list {
     display: none;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
-    padding-bottom: 0.75rem;
+    padding: 0.5rem 1.5rem 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
   }
   .nav__list.is-open { display: flex; }
   .nav__link {
-    display: block;
-    width: 100%;
-    padding-block: 0.7rem;
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.78rem;
+    padding: 0.85rem 0.25rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+    background: none;
   }
-  .masthead__inner { flex-wrap: wrap; }
-  .nav { width: 100%; }
+  .nav__link:hover { background: none; }
+  .nav__link[aria-current="page"] { background: none; color: var(--accent); }
+  .masthead__inner { position: relative; }
 }
 
 /* --------------------------------------------------------------------------
-   5. Opening spread (hero)
+   6. Home hero
+   Asymmetric split: the message on the left, two photographs on the right.
+   The photographs are real content (Turing, a Waymo vehicle), not texture.
    -------------------------------------------------------------------------- */
-.opener { padding-block: 4.5rem 3.5rem; }
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: 3.5rem;
+  align-items: center;
+  padding-block: 4rem 5rem;
+}
 
-.opener__kicker {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.hero__title {
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-weight: 650;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  max-width: 13ch;
+}
+.hero__title em {
+  font-style: normal;
   color: var(--accent);
-  margin: 0 0 1.6rem;
 }
 
-.opener__title {
-  font-size: clamp(2.9rem, 8.5vw, 5.6rem);
-  font-weight: 400;
-  line-height: 0.99;
-  letter-spacing: -0.028em;
-  margin: 0;
-  max-width: 15ch;
-}
-.opener__title em {
-  font-style: italic;
-  font-weight: 300;
-}
-
-/* The standfirst — the larger intro paragraph under a headline. */
-.standfirst {
-  margin: 2rem 0 0;
-  max-width: 40rem;
-  font-size: 1.35rem;
+.hero__sub {
+  margin: 1.5rem 0 0;
+  max-width: 30rem;
+  font-size: 1.25rem;
   line-height: 1.5;
-  font-weight: 300;
   color: var(--ink-2);
 }
 
-.byline {
+.actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.6rem;
-  margin-top: 2.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 2.25rem;
+}
+
+.hero__media {
+  position: relative;
+  min-height: 30rem;
+}
+.hero__photo {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  box-shadow: var(--shadow);
+}
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; }
+.hero__photo--a { inset: 0 24% 14% 0; }
+.hero__photo--b { inset: 38% 0 0 34%; border: 6px solid var(--bg); }
+
+.hero__credit {
+  grid-column: 1 / -1;
+  margin: -1.5rem 0 0;
+  font-size: 0.8125rem;
   color: var(--ink-3);
+}
+.hero__credit a { color: inherit; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding-block: 2.5rem 3.5rem; }
+  .hero__media { min-height: 0; aspect-ratio: 5 / 4; }
+  .hero__credit { margin: -1rem 0 0; }
+}
+
+/* Page-load entrance: transform only, in order of importance, so the text
+   is readable from the first frame and the photographs settle in after it. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__title, .hero__sub, .hero .actions { animation: rise .8s var(--ease) both; }
+  .hero__sub { animation-delay: .08s; }
+  .hero .actions { animation-delay: .16s; }
+  .hero__photo--a { animation: rise 1s var(--ease) .1s both; }
+  .hero__photo--b { animation: rise 1s var(--ease) .25s both; }
+}
+@keyframes rise {
+  from { transform: translateY(18px); }
+  to   { transform: none; }
 }
 
 /* --------------------------------------------------------------------------
-   6. Contents index — the card grid's replacement
-   Numbered rows separated by hairlines. This is how a book lists its
-   chapters, and it carries more information in less space than three
-   equally-weighted boxes.
+   7. Contents - a bento of exactly four cells
+   Two cells carry photographs, one a tint of the accent, one the inverted
+   ink, so the grid has visual rhythm rather than four identical boxes.
    -------------------------------------------------------------------------- */
-.index { border-bottom: 1px solid var(--rule); }
-
-.index__row {
+.bento {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.15fr) 2rem;
-  align-items: baseline;
-  gap: 0 2rem;
-  padding: 1.9rem 0;
-  border-top: 1px solid var(--rule);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(17rem, auto);
+  gap: 1rem;
+}
+.tile:nth-child(1) { grid-column: span 4; }
+.tile:nth-child(2) { grid-column: span 2; }
+.tile:nth-child(3) { grid-column: span 2; }
+.tile:nth-child(4) { grid-column: span 4; }
+
+.tile {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  color: var(--ink);
   text-decoration: none;
-  color: inherit;
-  transition: background-color 0.14s;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
-.index__row:hover { background: rgba(156, 52, 24, 0.045); }
+.tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.tile:active { transform: translateY(0) scale(.99); }
 
-.index__num {
+.tile__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--ease);
+}
+.tile:hover .tile__img { transform: scale(1.04); }
+
+/* The scrim is the one gradient on the site: it exists so white text over a
+   photograph stays above 4.5:1. */
+.tile--photo { color: #F5F6F7; }
+.tile--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgb(8 10 12 / .86) 8%, rgb(8 10 12 / .5) 48%, rgb(8 10 12 / .12));
+}
+.tile--soft  { background: var(--accent-soft); color: var(--on-soft); }
+.tile--ink   { background: var(--ink); color: var(--bg); }
+
+.tile__num {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.75rem;
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--ink-3);
-  transition: color 0.14s;
+  opacity: .85;
 }
-.index__row:hover .index__num { color: var(--accent); }
+.tile__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+.tile__blurb {
+  margin: 0.6rem 0 0;
+  max-width: 28rem;
+  font-size: 0.975rem;
+  line-height: 1.5;
+  opacity: .92;
+}
+.tile__mark {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.75rem;
+  font-size: 1.25rem;
+  transition: transform .4s var(--ease);
+}
+.tile:hover .tile__mark { transform: translate(3px, -3px); }
 
-.index__title {
-  font-size: 1.7rem;
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.15;
-}
-
-.index__blurb {
-  margin: 0;
-  max-width: none;
-  font-size: 0.98rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-
-.index__mark {
-  justify-self: end;
-  font-family: var(--mono);
-  font-size: 0.95rem;
-  color: var(--ink-3);
-  transition: transform 0.14s, color 0.14s;
-}
-.index__row:hover .index__mark {
-  color: var(--accent);
-  transform: translateX(4px);
-}
+.bento-head { margin-bottom: 2rem; }
+.bento-head h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
 
 @media (max-width: 800px) {
-  .index__row {
-    grid-template-columns: 3rem minmax(0, 1fr);
-    gap: 0.4rem 1.25rem;
-    padding: 1.5rem 0;
-  }
-  .index__blurb { grid-column: 2; }
-  .index__mark  { display: none; }
-  .index__title { font-size: 1.4rem; }
+  .bento { grid-template-columns: 1fr; grid-auto-rows: minmax(15rem, auto); }
+  .tile:nth-child(n) { grid-column: auto; }
 }
 
 /* --------------------------------------------------------------------------
-   7. Prose
+   8. Prose
    -------------------------------------------------------------------------- */
 .prose > * { max-width: var(--measure); }
 
 .prose h2 {
-  margin: 3.2rem 0 1.1rem;
-  font-size: 1.85rem;
-  font-weight: 400;
-  letter-spacing: -0.018em;
+  margin: 3.5rem 0 1rem;
+  font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+  font-weight: 600;
 }
 .prose h2:first-child { margin-top: 0; }
 
 .prose h3 {
-  margin: 2.4rem 0 0.7rem;
-  font-size: 1.22rem;
+  margin: 2.5rem 0 0.7rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.02em;
 }
 
 .prose a {
   color: var(--accent);
   text-decoration: underline;
-  text-underline-offset: 0.18em;
+  text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  transition: text-decoration-thickness .15s;
 }
-.prose a:hover { background: rgba(156, 52, 24, 0.09); }
+.prose a:hover { text-decoration-thickness: 2px; }
 
 .prose strong { font-weight: 600; }
 
 .prose ul, .prose ol {
   max-width: var(--measure);
-  margin: 0 0 1.15em;
+  margin: 0 0 1.2em;
   padding-left: 1.3rem;
 }
 .prose li { margin-bottom: 0.5rem; }
 .prose li::marker { color: var(--ink-3); }
 
-/* Lead paragraph — the first paragraph of a page, set slightly larger. */
 .prose .lead {
-  font-size: 1.3rem;
-  line-height: 1.5;
-  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
   color: var(--ink-2);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
 }
 
-/* Pull quote — set in italic, hung off a heavy left rule. */
 .pullquote {
-  max-width: 30rem;
-  margin: 2.6rem 0;
-  padding-left: 1.5rem;
-  border-left: 3px solid var(--accent);
-  font-size: 1.4rem;
-  line-height: 1.4;
-  font-style: italic;
-  font-weight: 300;
+  max-width: 34rem;
+  margin: 2.75rem 0;
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  line-height: 1.3;
+  font-weight: 550;
+  letter-spacing: -0.03em;
   color: var(--ink);
+  text-wrap: balance;
 }
 
-/* An aside set in the margin, the way a textbook annotates a page. */
 .sidenote {
   max-width: var(--measure);
-  margin: 2.2rem 0;
-  padding: 1.2rem 1.4rem;
-  background: var(--band);
-  border-left: 2px solid var(--rule-mid);
-  font-size: 0.94rem;
-  line-height: 1.55;
+  margin: 2.5rem 0;
+  padding: 1.4rem 1.6rem;
+  background: var(--surface-2);
+  border-radius: var(--r-lg);
+  font-size: 0.975rem;
+  line-height: 1.6;
   color: var(--ink-2);
 }
-.sidenote p { max-width: none; margin-bottom: 0.6rem; }
+.sidenote p { max-width: none; margin-bottom: 0.7rem; }
 .sidenote p:last-child { margin-bottom: 0; }
 .sidenote__label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 500;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+  margin-bottom: 0.6rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-/* Defined term — used where jargon is introduced. */
 .term {
-  font-style: italic;
-  border-bottom: 1px dotted var(--rule-mid);
+  font-style: normal;
+  font-weight: 550;
+  background: var(--accent-soft);
+  color: var(--on-soft);
+  padding: 0.05em 0.35em;
+  border-radius: 6px;
 }
 
 /* --------------------------------------------------------------------------
-   8. Data table — plain rules, no zebra striping
+   9. Data table
    -------------------------------------------------------------------------- */
-.table-scroll { overflow-x: auto; margin: 2rem 0; }
+.table-scroll {
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
 
 table {
   width: 100%;
-  max-width: var(--measure);
   border-collapse: collapse;
-  font-size: 0.96rem;
+  font-size: 0.95rem;
 }
 th, td {
-  padding: 0.7rem 1rem 0.7rem 0;
+  padding: 0.9rem 1.1rem;
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid var(--rule);
 }
+tbody tr + tr td { border-top: 1px solid var(--line); }
 th {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 600;
   color: var(--ink-3);
-  border-bottom: 1px solid var(--ink);
+  background: var(--surface-2);
 }
 
 /* --------------------------------------------------------------------------
-   9. Links and buttons
-   The primary action is a bordered word, not a filled pill.
+   10. Buttons and links
+   Everything you press is a pill. The press itself moves 1px, so the
+   interface answers the click.
    -------------------------------------------------------------------------- */
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  align-items: center;
-  margin-top: 2.4rem;
-}
-
 .btn {
-  display: inline-block;
-  padding: 0.72rem 1.5rem;
-  border: 1px solid var(--ink);
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
+  background: var(--surface);
   color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.73rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 550;
+  line-height: 1.2;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.14s, color 0.14s;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
 }
-.btn:hover { background: var(--ink); color: var(--paper); }
+.btn:hover { border-color: var(--ink); }
+.btn:active { transform: translateY(1px) scale(.985); }
 
-.btn--accent { border-color: var(--accent); color: var(--accent); }
-.btn--accent:hover { background: var(--accent); color: var(--paper); }
+.btn--accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.btn--accent:hover { background: var(--accent); border-color: var(--accent); filter: brightness(1.08); }
 
-/* A quieter inline "next" link. */
 .textlink {
-  font-family: var(--mono);
-  font-size: 0.73rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  font-size: 0.9375rem;
+  font-weight: 550;
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid var(--rule-mid);
-  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
 }
-.textlink:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.textlink:hover { border-bottom-width: 2px; }
 
 /* --------------------------------------------------------------------------
-   10. Page head (interior pages)
+   11. Page head (interior pages)
    -------------------------------------------------------------------------- */
-.pagehead {
-  padding-block: 3.5rem 2.5rem;
-  border-bottom: 1px solid var(--rule);
-}
+.pagehead { padding-block: 4.5rem 1rem; }
 .pagehead__num {
+  margin: 0 0 1rem;
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--accent);
-  margin: 0 0 1.2rem;
 }
 .pagehead__title {
-  font-size: clamp(2.3rem, 6vw, 3.7rem);
-  font-weight: 400;
+  font-size: clamp(2.5rem, 6.4vw, 4.75rem);
+  font-weight: 650;
   line-height: 1.02;
-  letter-spacing: -0.025em;
-  max-width: 17ch;
+  letter-spacing: -0.045em;
+  max-width: 16ch;
 }
 
-/* Status marker for pages that aren't written yet. */
 .status {
   display: inline-block;
   margin-left: 0.6rem;
-  padding: 0.2rem 0.55rem;
-  border: 1px solid var(--rule-mid);
-  font-family: var(--mono);
-  font-size: 0.62rem;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--ink-3);
-  vertical-align: 0.4em;
+  vertical-align: 0.3em;
 }
 
 /* --------------------------------------------------------------------------
-   11. Page footer navigation — "next in the sequence"
+   12. Next-page link
    -------------------------------------------------------------------------- */
 .readnext {
   display: block;
   margin-top: var(--bay);
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--ink);
+  padding: 1.75rem 1.9rem;
+  max-width: var(--measure);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
   text-decoration: none;
   color: inherit;
-  max-width: var(--measure);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s;
 }
+.readnext:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line-2); }
+.readnext:active { transform: scale(.99); }
 .readnext__label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
+  display: block;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
   color: var(--ink-3);
 }
 .readnext__title {
-  margin-top: 0.5rem;
-  font-size: 1.7rem;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
 }
 .readnext:hover .readnext__title { color: var(--accent); }
 
 /* --------------------------------------------------------------------------
-   12. Colophon (footer)
+   13. Footer
    -------------------------------------------------------------------------- */
 .colophon {
-  margin-top: var(--bay);
-  border-top: 1px solid var(--ink);
-  padding-block: 2.8rem 2.2rem;
-  background: var(--paper);
+  padding-block: 3.5rem 2.25rem;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
 }
 
 .colophon__grid {
@@ -667,313 +808,317 @@ th {
   max-width: 26rem;
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--ink-2);
 }
 
 .colophon__heading {
   margin: 0 0 0.9rem;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 500;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .colophon__list { margin: 0; padding: 0; list-style: none; }
-.colophon__list li { margin-bottom: 0.45rem; }
+.colophon__list li { margin-bottom: 0.5rem; }
 .colophon__list a {
   font-size: 0.95rem;
   color: var(--ink-2);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
 }
-.colophon__list a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.colophon__list a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 0.2em; }
 
 .colophon__foot {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.6rem 2rem;
-  margin-top: 2.6rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 0.67rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.8125rem;
   color: var(--ink-3);
 }
 
 /* --------------------------------------------------------------------------
-   13. Reduced motion
-   -------------------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   14. Print — a text site should print cleanly
-   -------------------------------------------------------------------------- */
-@media print {
-  .masthead, .colophon, .readnext, .skip-link { display: none; }
-  body { background: #fff; color: #000; font-size: 11pt; }
-  .prose > *, p { max-width: none; }
-}
-
-/* --------------------------------------------------------------------------
-   15. Timeline
-   Built on the same margin-column idea as the rest of the site: the year
-   sits in the margin, the event sits in the text column. An era band
-   groups entries into periods so the shape of the history is visible
-   without reading every row.
+   14. Timeline
+   A single continuous rule runs down the left of each era and the entries
+   hang from it. That gives the reader the shape of the history without a
+   hairline under every row.
    -------------------------------------------------------------------------- */
 .era {
-  margin-top: 3.2rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--ink);
+  margin-top: 4rem;
 }
 .era:first-of-type { margin-top: 0; }
 
 .era__label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--accent);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
 }
 .era__span {
-  margin-left: 0.6rem;
-  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--accent);
 }
 .era__note {
-  margin: 0.7rem 0 0;
+  margin: 0.6rem 0 0;
   max-width: var(--measure);
-  font-size: 0.97rem;
+  font-size: 1rem;
   color: var(--ink-2);
 }
 
+/* Entries sit under their era; the left rule is drawn per entry so it stays
+   continuous without needing a wrapper element in the markup. */
 .event {
   display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr);
-  gap: 0 2rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--rule);
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0 1.5rem;
+  padding: 1.6rem 0 1.6rem 1.5rem;
+  margin-left: 0.25rem;
+  border-left: 2px solid var(--line);
 }
-.era > .event:first-of-type { border-top: 1px solid var(--rule); }
+.era + .event { margin-top: 1.25rem; }
 
 .event__year {
+  padding-top: 0.2rem;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--ink-3);
-  padding-top: 0.28rem;
+  color: var(--accent);
 }
 
 .event__title {
   margin: 0 0 0.4rem;
   font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: -0.012em;
+  font-weight: 600;
+  letter-spacing: -0.025em;
   line-height: 1.25;
 }
 
 .event__body {
   margin: 0;
-  max-width: 32rem;
+  max-width: 34rem;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-2);
 }
 
 @media (max-width: 620px) {
-  .event { grid-template-columns: 1fr; gap: 0.3rem; }
+  .event { grid-template-columns: 1fr; gap: 0.3rem; padding-left: 1.1rem; }
   .event__year { padding-top: 0; }
 }
 
 /* --- Interactive variant (trial B) --------------------------------------
-   Entries collapse to a headline and expand on click. Uses a <button> so
-   it is keyboard operable and announced correctly, with aria-expanded
-   tracking the state. */
-.event--toggle { padding: 0; }
+   Entries collapse to a headline and expand on click. A real <button>, so
+   it is keyboard operable and announced correctly. */
+.event--toggle { padding: 0 0 0 0.25rem; }
 
 .event__button {
   display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr) 1.5rem;
-  gap: 0 2rem;
+  grid-template-columns: 4.5rem minmax(0, 1fr) 1.5rem;
+  gap: 0 1.5rem;
   width: 100%;
-  padding: 1.5rem 0;
+  padding: 1.4rem 0.5rem 1.4rem 1.25rem;
   background: none;
   border: 0;
+  border-radius: var(--r-md);
   text-align: left;
   font: inherit;
   color: inherit;
   cursor: pointer;
+  transition: background-color .2s var(--ease);
 }
-.event__button:hover { background: rgba(156, 52, 24, 0.045); }
-.event__button:hover .event__year { color: var(--accent); }
+.event__button:hover { background: var(--surface-2); }
 
 .event__sign {
   justify-self: end;
   align-self: start;
-  padding-top: 0.2rem;
+  padding-top: 0.1rem;
   font-family: var(--mono);
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--ink-3);
 }
 .event__button[aria-expanded="true"] .event__sign { color: var(--accent); }
 
-.event__panel {
-  padding: 0 0 1.5rem 7rem;
-}
+.event__panel { padding: 0 0 1.5rem 7.25rem; }
 .event__panel[hidden] { display: none; }
 
 @media (max-width: 620px) {
   .event__button { grid-template-columns: 1fr 1.5rem; }
-  .event__panel { padding-left: 0; }
+  .event__panel { padding-left: 1.25rem; }
 }
 
-/* Era filter — trial B only */
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-bottom: 2.5rem;
 }
 .filter {
-  padding: 0.45rem 0.9rem;
-  background: none;
-  border: 1px solid var(--rule-mid);
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
   color: var(--ink-2);
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
 }
 .filter:hover { border-color: var(--ink); color: var(--ink); }
+.filter:active { transform: scale(.97); }
 .filter[aria-pressed="true"] {
   background: var(--ink);
   border-color: var(--ink);
-  color: var(--paper);
+  color: var(--bg);
 }
 
 .trialbar {
   padding: 0.7rem 0;
   background: var(--ink);
-  color: var(--paper);
+  color: var(--bg);
   font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 /* --------------------------------------------------------------------------
-   16. Glossary
-   A definition list, not a table: the term is the heading of its own
-   definition, which is what <dl> exists to express. Each entry links back
-   to the section where the term is introduced in context.
+   15. Glossary
+   A definition list shown as a two-column grid of soft cards. Each term
+   is the heading of its own definition, which is what <dl> expresses.
    -------------------------------------------------------------------------- */
-.glossary { margin: 0; }
+.glossary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
 
 .glossary__entry {
-  display: grid;
-  grid-template-columns: 13rem minmax(0, 1fr);
-  gap: 0 2.5rem;
-  padding: 1.4rem 0;
-  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  transition: border-color .3s, transform .5s var(--ease);
 }
-.glossary__entry:last-child { border-bottom: 1px solid var(--rule); }
+.glossary__entry:hover { border-color: var(--line-2); transform: translateY(-2px); }
+/* The :target highlight lets a link from the prose land on the right entry. */
+.glossary__entry:has(:target) { border-color: var(--accent); }
 
 .glossary dt {
-  font-size: 1.08rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .glossary dd {
   margin: 0;
-  max-width: 32rem;
-  font-size: 1rem;
+  font-size: 0.975rem;
   line-height: 1.6;
   color: var(--ink-2);
 }
 
 .glossary__source {
   display: block;
-  margin-top: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+  margin-top: 0.8rem;
+  font-size: 0.875rem;
+  font-weight: 550;
+  color: var(--accent);
   text-decoration: none;
 }
-.glossary__source:hover { color: var(--accent); }
+.glossary__source:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
-@media (max-width: 700px) {
-  .glossary__entry { grid-template-columns: 1fr; gap: 0.4rem; }
+@media (max-width: 800px) {
+  .glossary { grid-template-columns: 1fr; }
 }
 
 /* --------------------------------------------------------------------------
-   17. Gallery
-   Figures at full measure with the caption set beneath in the margin
-   style. Attribution sits with each image rather than being collected in
-   a footnote, because CC BY-SA requires credit to travel with the work.
+   16. Gallery
+   A six-column grid so the four photographs get a rhythm: a wide opener,
+   two side by side, a wide closer. Attribution sits with each image
+   because CC BY-SA requires credit to travel with the work.
    -------------------------------------------------------------------------- */
-.gallery { margin: 0; }
-
-.figure {
-  margin: 0 0 3.5rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--rule);
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 3rem 1.25rem;
+  margin: 0;
 }
-.figure:first-child { padding-top: 0; border-top: 0; }
+.figure { margin: 0; grid-column: span 3; }
+.figure:nth-child(1), .figure:nth-child(4) { grid-column: span 6; }
+.figure:nth-child(2) { grid-column: span 2; }
+.figure:nth-child(3) { grid-column: span 4; }
 
 .figure__num {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.9rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* Reserving the aspect ratio stops the page reflowing as images arrive,
-   which is a real usability problem on a slow connection. */
+/* Reserving the aspect ratio stops the page reflowing as images arrive. */
 .figure__frame {
-  background: var(--band);
-  border: 1px solid var(--rule);
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
 }
 .figure__frame img {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform .8s var(--ease);
 }
+.figure:hover .figure__frame img { transform: scale(1.025); }
 
-.figure figcaption {
-  margin-top: 1rem;
-  max-width: 32rem;
-}
+.figure figcaption { margin-top: 1rem; max-width: 34rem; }
 .figure__caption {
   margin: 0 0 0.6rem;
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: 0.975rem;
+  line-height: 1.6;
   color: var(--ink-2);
 }
 .figure__credit {
   margin: 0;
-  font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.8125rem;
   line-height: 1.6;
-  letter-spacing: 0.04em;
   color: var(--ink-3);
 }
 .figure__credit a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
 .figure__credit a:hover { color: var(--accent); }
+
+@media (max-width: 800px) {
+  .gallery { grid-template-columns: 1fr; }
+  .figure:nth-child(n) { grid-column: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   17. Reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. Print - a text site should print cleanly
+   -------------------------------------------------------------------------- */
+@media print {
+  :root { --bg: #fff; --surface: #fff; --ink: #000; --ink-2: #000; --ink-3: #333; }
+  .masthead, .colophon, .readnext, .skip-link, body::before { display: none; }
+  body { font-size: 11pt; }
+  .prose > *, p { max-width: none; }
+  .margin-note { position: static; }
+}

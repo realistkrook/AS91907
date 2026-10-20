@@ -41,6 +41,7 @@ const SHOT_DIR = path.join(OUT_DIR, "screenshots", SHOT_SUB);
 
 const WIDTHS = [375, 768, 1280];                       // phone, tablet, desktop
 const SHOT_PAGES = ["index.html", "what-is-ai.html", "history.html", "gallery.html"];
+const REQUIRED_FONTS = ["Geist", "Geist Mono"];
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
 /* ---------- dependency loading ------------------------------------------ */
@@ -107,7 +108,11 @@ const externalLinks = new Map();
 for (const file of PAGES) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await ctx.newPage();
-  const consoleErrors = [], localFailures = [], thirdPartyFailures = [];
+  const consoleErrors = [], localFailures = [], thirdPartyFailures = [], otherDomains = new Set();
+  // Privacy: any request that leaves this site shares the visitor's IP address
+  // with someone else. The site should make none.
+  page.on("request", (r) => { const u = new URL(r.url());
+    if (/^https?:$/.test(u.protocol) && !r.url().startsWith(BASE)) otherDomains.add(u.host); });
   page.on("console", (m) => { if (m.type() === "error") consoleErrors.push(m.text()); });
   page.on("pageerror", (e) => consoleErrors.push(e.message));
   const note = (url, msg) => (url.startsWith(BASE) ? localFailures : thirdPartyFailures).push(msg);
@@ -119,6 +124,14 @@ for (const file of PAGES) {
 
   const resp = await page.goto(`${BASE}/${file}`, { waitUntil: "load" });
   await page.waitForTimeout(400);
+
+  // Fonts: confirm both typefaces actually loaded. A broken font path fails
+  // silently — the page falls back to Georgia and still looks plausible.
+  const fontsLoaded = await page.evaluate(async () => {
+    await document.fonts.ready;
+    return [...new Set([...document.fonts].filter((f) => f.status === "loaded")
+      .map((f) => f.family.replace(/["']/g, "")))].sort();
+  });
 
   // --- links -------------------------------------------------------------
   const links = await page.$$eval("a[href]", (as) =>
@@ -157,6 +170,7 @@ for (const file of PAGES) {
   R.func[file] = {
     status: resp?.status(), consoleErrors, localFailures, thirdPartyFailures,
     internalLinks: internal.length - imgSrcs.length, images: imgSrcs.length, broken, ...nav,
+    otherDomains: [...otherDomains], fontsLoaded,
   };
 
   // --- axe-core ------------------------------------------------------------
@@ -333,7 +347,8 @@ const now = new Date();
 const stamp = now.toLocaleString("en-NZ", { timeZone: "Pacific/Auckland", dateStyle: "medium", timeStyle: "short" });
 
 const fFail = PAGES.filter((p) => { const f = R.func[p];
-  return f.status !== 200 || f.consoleErrors.length || f.localFailures.length || f.broken.length || f.current !== 1; });
+  return f.status !== 200 || f.consoleErrors.length || f.localFailures.length || f.broken.length || f.current !== 1 ||
+    f.otherDomains.length || !REQUIRED_FONTS.every((x) => f.fontsLoaded.includes(x)); });
 const headerVariants = Object.keys(R.shared.header).length, footerVariants = Object.keys(R.shared.footer).length;
 const sharedOk = headerVariants === 1 && footerVariants === 1;
 const extBad = R.external.filter((e) => typeof e.status === "number" && e.status >= 400);
@@ -360,10 +375,11 @@ push(`# Test report`, "",
 push("---", "", "## 1. Functionality", "",
   "Every page is loaded and every internal link on it is requested. Console errors and failed",
   "same-origin requests are recorded. The menu is tested separately under Responsive.", "",
-  "| Page | HTTP | Internal links | Images | Broken | Console errors | Nav items | Active item |",
-  "|---|---|---|---|---|---|---|---|");
+  "| Page | HTTP | Internal links | Images | Broken | Console errors | Nav items | Active item | Requests to other domains | Fonts loaded |",
+  "|---|---|---|---|---|---|---|---|---|---|");
 for (const p of PAGES) { const f = R.func[p];
-  push(`| ${p} | ${f.status} | ${f.internalLinks} | ${f.images} | ${f.broken.length ? "**" + f.broken.length + "**" : 0} | ${f.consoleErrors.length ? "**" + f.consoleErrors.length + "**" : 0} | ${f.navLinks} | ${f.current === 1 ? f.currentHref : "**" + f.current + "**"} |`); }
+  push(`| ${p} | ${f.status} | ${f.internalLinks} | ${f.images} | ${f.broken.length ? "**" + f.broken.length + "**" : 0} | ${f.consoleErrors.length ? "**" + f.consoleErrors.length + "**" : 0} | ${f.navLinks} | ${f.current === 1 ? f.currentHref : "**" + f.current + "**"} | ${f.otherDomains.length ? "**" + f.otherDomains.join(", ") + "**" : "none"} | ${REQUIRED_FONTS.every((x) => f.fontsLoaded.includes(x)) ? "both" : "**" + (f.fontsLoaded.join(", ") || "none") + "**"} |`); }
+push("", `**Privacy:** ${PAGES.every((p) => !R.func[p].otherDomains.length) ? `no page makes a request to any other domain, so no visitor's IP address is shared with a third party. Fonts are self-hosted.` : `**pages contact other domains** — every such request shares the visitor's IP address.`}`);
 push("", `**Shared components:** ${sharedOk ? `the header and footer are identical on all ${PAGES.length} pages, apart from which navigation item is marked current.` : `**the header has ${headerVariants} different versions and the footer ${footerVariants} across the site** — ` + [...Object.values(R.shared.header), ...Object.values(R.shared.footer)].filter((g) => g.length < PAGES.length).map((g) => g.join(", ")).join(" / ")}`);
 push("", `**Reachability:** ${R.unreachable.length ? "**not reachable from the homepage: " + R.unreachable.join(", ") + "**" : `all ${PAGES.length} pages can be reached by following links from the homepage.`}`, "");
 const allBroken = PAGES.flatMap((p) => R.func[p].broken.map((b) => `- ${p} → ${b}`));

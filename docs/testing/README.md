@@ -5,7 +5,7 @@ Everything here maps to one of the Milestone 6 cards on the
 
 | Trello card | Evidence | How it was tested |
 |---|---|---|
-| Test 1 of 4: Functionality | [test-report.md §1](test-report.md) | Automated: every internal link and image requested on every page; console errors captured; current nav item checked; header and footer compared across pages; reachability crawl from the homepage; external links requested |
+| Test 1 of 4: Functionality | [test-report.md §1](test-report.md) | Automated: every internal link and image requested on every page; console errors captured; current nav item checked; header and footer compared across pages; reachability crawl from the homepage; external links requested; every request to another domain recorded (privacy); both fonts confirmed loaded |
 | Test 2 of 4: Usability & accessibility | [test-report.md §2](test-report.md) · [`../check-contrast.py`](../check-contrast.py) | Automated: axe-core WCAG 2.2 AA audit; Tab-key walk checking for a visible focus ring at every stop; skip link activated and confirmed to land in the main content; heading outline. Colour contrast checked by script |
 | Test 3 of 4: Cross-browser & responsive | [test-report.md §3](test-report.md) · screenshots | Automated in Chromium at 375 / 768 / 1280px: overflow, menu opened and closed with Escape, focus return, touch-target size. **Safari and Firefox still need testing by hand** — see below |
 | Test 4 of 4: Content | [content-review.md](content-review.md) · [test-report.md §4](test-report.md) | Manual: every image description checked against the photograph; every factual claim checked; spelling. Automated: leftover placeholder text, repeated words, sentence length, readability |

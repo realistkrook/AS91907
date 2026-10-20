@@ -40,7 +40,7 @@
 
   // Clear the mobile open state if the window is widened back to desktop.
   window.addEventListener("resize", function () {
-    if (window.innerWidth > 860) {
+    if (window.innerWidth > 960) {
       setOpen(false);
     }
   });

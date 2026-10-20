@@ -11,71 +11,46 @@ and fonts consistent with an AI/tech theme."
 
 ---
 
-## Design direction — editorial / Swiss information design
+## Design direction: clean modern reading UI
 
-The reference points are printed explanatory writing: a broadsheet long-read,
-a well-set textbook, Edward Tufte's page layouts.
+> **Second revision.** The editorial version (paper ground, serif prose, oxide
+> red accent, hairline rules) was replaced with a modern interface built for
+> reading on screens. The content, page structure, URLs and navigation labels
+> are unchanged.
 
-The argument for it: this site is almost entirely prose whose job is to
-explain something. It should therefore be built like an object made to be
-*read*, not like a product landing page. A secondary benefit is thematic —
-a guide arguing that AI is widely misunderstood is more credible when it does
-not dress itself in the visual clichés of AI marketing.
-
-Rules that follow:
+The site is mostly explanatory prose for students, so the interface has to
+disappear into the reading while still feeling designed. The language is a
+cool neutral ground, one emerald accent, a single sans family with a mono
+companion, soft corners, and photographs used as real content.
 
 | Decision | Reasoning |
 |---|---|
-| Paper ground, not dark mode | Long-form reading is easier on a light background |
-| Serif for prose, mono for labels | Serif for the argument, mono for anything that indexes or numbers it |
-| Hairline rules, not cards | A numbered index states reading order; equal boxes cannot |
-| One accent colour only | An accent that appears everywhere stops being an accent |
-| No gradients, shadows or rounded corners | None of them carry information here |
-| No icon per heading | Decorative icons add visual noise and no meaning |
+| Light and dark both designed | Follows the visitor's system setting; every pairing verified in both |
+| One sans family (Geist) + Geist Mono for numbers | Fewer faces, clearer hierarchy; mono marks years and section numbers |
+| One accent (emerald) | Marks links, state and the primary action only |
+| One shape system | 20px for media and large surfaces, 12px for small ones, full pill for anything you press |
+| Bento contents instead of a text list | Four cells for four sections; two photographs, one tint, one inverted |
+| Sticky label rail on long pages | Keeps the reader oriented; replaces the old decorative margin labels |
+| Motion with a job | Load-in hierarchy, hover and press feedback, reading-progress bar. Nothing loops. All of it stops under `prefers-reduced-motion` |
 
 ---
 
 ## Colour palette
 
-| Token | Hex | Used for |
-|---|---|---|
-| `--paper` | `#FAF9F6` | Page ground |
-| `--band` | `#F2EFE7` | Tinted band for set-apart sections and sidenotes |
-| `--ink` | `#16150F` | Body text, headings, rules |
-| `--ink-2` | `#55524A` | Secondary text, standfirsts |
-| `--ink-3` | `#6E6A60` | Labels, metadata, captions |
-| `--accent` | `#9C3418` | Oxide red — section numbers, links in prose, active nav |
-| `--rule` | `#DDD9CF` | Hairline dividers |
-| `--rule-mid` | `#C4BFB2` | Slightly stronger dividers |
-
-The accent is the red of printers' ink rather than of software. It appears
-only on section numbers, prose links, and the current nav item — never as a
-background fill or decoration.
+| Token | Light | Dark | Used for |
+|---|---|---|---|
+| `--bg` | `#F5F6F7` | `#0D0F11` | Page ground |
+| `--surface` | `#FBFBFC` | `#14171A` | Raised surfaces |
+| `--surface-2` | `#ECEEF0` | `#1B1F23` | Tinted surfaces, asides |
+| `--ink` | `#101214` | `#ECEEEF` | Body text, headings |
+| `--ink-2` | `#43494F` | `#B4BAC0` | Secondary text |
+| `--ink-3` | `#5B636B` | `#8D959D` | Metadata, captions |
+| `--accent` | `#0B7A55` | `#4FD6A3` | Links, active nav, primary button |
+| `--accent-soft` | `#DDF0E8` | `#12261F` | Quiet accent surfaces |
 
 ### Contrast verification (WCAG 2.1)
 
-Checked **before** any page was built. AA requires 4.5:1 for normal text and
-3:1 for large text; AAA requires 7:1.
-
-| Pairing | Ratio | AA | AAA |
-|---|---|---|---|
-| Ink on paper | **17.37:1** | Pass | Pass |
-| Secondary ink on paper | **7.41:1** | Pass | Pass |
-| Tertiary ink on paper | **5.12:1** | Pass | — |
-| Tertiary ink on band | **4.69:1** | Pass | — |
-| Accent on paper | **6.84:1** | Pass | — |
-| Accent on band | **6.26:1** | Pass | — |
-| Paper on ink (skip link) | **17.37:1** | Pass | Pass |
-| Paper on accent | **6.84:1** | Pass | — |
-
-Every pairing meets AA.
-
-> **This check caught a real failure.** The tertiary grey was first chosen by
-> eye as `#8A867C`, which measures **3.45:1** and fails AA outright. It was
-> darkened to `#6E6A60` before a single page was written. Finding this in
-> Milestone 6 instead would have meant restyling every page.
-
-Re-run the check with:
+Every text pairing in both modes meets AA (4.5:1). Re-run the check with:
 
 ```bash
 python3 docs/check-contrast.py
@@ -89,23 +64,23 @@ Screenshot that output as evidence for Milestone 6, Test 2 of 4.
 
 | Role | Typeface | Why |
 |---|---|---|
-| Headings and prose | **Newsreader** | A screen-first editorial serif with a genuine italic. Reads well at length and gives the site a printed character. |
-| Labels, numbers, navigation, metadata | **IBM Plex Mono** | Fixed-width for anything that indexes, numbers or labels. Creates a clear split between *the argument* and *the apparatus around it*. |
+| Headings and prose | **Geist** (variable) | A clean screen-first sans that stays legible at small sizes and holds up at display sizes with tight tracking |
+| Numbers, years, section numbers | **Geist Mono** (variable) | Fixed-width for anything that indexes |
 
-Two families, each with one job. Both fall back to a system stack, so the site
-still renders sensibly with no network — relevant to the Milestone 6
-cross-browser test.
+Both are **self-hosted** in `/fonts` rather than loaded from Google Fonts, so
+no visitor's IP address is sent to a third party and the typography works
+offline. Latin and Latin Extended subsets only; Latin Extended carries the
+macron vowels used in te reo Maori. Both are SIL Open Font License 1.1; the
+licence files sit beside the fonts.
 
-- Headings use `clamp()` so type scales smoothly rather than jumping at breakpoints.
-- The measure is capped at `34rem` (≈65 characters), the comfortable range for reading.
+- The measure is capped at `40rem` (about 65 characters).
 - `text-wrap: pretty` on paragraphs and `balance` on headings prevent orphans.
 
 ---
 
 ## Logo / wordmark
 
-There is no pictorial logo. The wordmark is the site name set in letterspaced
-mono capitals.
+There is no pictorial logo. The wordmark is the site name set in semibold Geist.
 
 This is deliberate. The previous version used a hand-drawn "neural network"
 SVG — three dots and some connecting lines — which is the single most generic
@@ -117,10 +92,11 @@ mistaken for a stock icon.
 
 ## Layout
 
-A two-column editorial grid (`.spread`): a narrow margin column for labels and
-section numbers, and a wide column for content. The margin column is what makes
-the layout read as a document rather than a web page. It collapses to a single
-column below 800px.
+Long pages use a two-column grid (`.spread`): a sticky label rail and a wide
+content column, collapsing to one column below 800px. The homepage uses an
+asymmetric split hero and a four-cell bento. The gallery uses a six-column
+grid for rhythm. The header is sticky, one line at desktop, and collapses to a
+labelled Menu button below 960px.
 
 ---
 

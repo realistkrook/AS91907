@@ -175,33 +175,53 @@ barely exist, because most modern AI is software with no physical appearance.
 Rather than pad the gallery with stock robot photography, it stops at four and
 says why on the page.
 
-Both typefaces (Newsreader and IBM Plex Mono) are released under the SIL Open
-Font License, which permits use on websites. All written content is original.
+Both typefaces (Geist and Geist Mono) are released under the SIL Open
+Font License 1.1. Once the fonts were hosted on this site (see §6), the site
+was *redistributing* them rather than just linking to Google's copies — and the
+licence requires that it travel with the files. Both licence texts now sit in
+`/fonts` beside the font files. All written content is original.
 
 ---
 
-## 6. Privacy, and a known limitation
+## 6. Privacy
 
 **Dropping the contact form removed a privacy implication.** The form would
 have collected names and email addresses, raising questions about what is
 stored, where, and for how long. The site now collects no personal data.
 
-**One privacy implication remains unaddressed, and it is worth being honest
-about.** The fonts are loaded from Google Fonts, which means every visitor's
-browser contacts Google's servers, sending their IP address. A German court
-ruled in 2022 that embedding Google Fonts this way breached EU privacy law. The fix — hosting the
-font files on this site instead — was identified but not carried out, and is
-the first recommended improvement. It would also make the site work fully
-offline and remove a dependency on a third party staying available.
+**A privacy problem was found while writing this discussion, and fixed.** The
+fonts were loaded from Google Fonts, so every visitor's browser contacted
+Google's servers and sent their IP address — before they had read a word. A
+German court ruled in 2022 that embedding Google Fonts this way breached EU
+privacy law.
+
+The fonts are now hosted on this site. Only the Latin and Latin Extended
+subsets are included; Latin Extended carries the macron vowels used in te reo
+Māori, which a New Zealand site should render properly. The browser downloads a
+subset only when the page uses a character from it, so visitors download about
+the same amount as before.
+
+**Verified, not assumed.** Two checks were added to the test suite: one records
+every request each page makes to another domain, and one confirms both fonts
+actually loaded. The second matters because a broken font path fails silently
+— the page falls back to Georgia and still looks plausible. Before trusting
+the checks, they were run against the old version, where they correctly
+reported `fonts.googleapis.com` and `fonts.gstatic.com` on every page. On the
+current version: **no page makes a request to any other domain**, and both
+fonts load on every page ([final run §1](testing/test-report.md)).
+
+The site now sends a visitor's data to no one but this site. It also works
+fully offline, and no longer depends on a third party staying available.
 
 ---
 
 ## 7. Sustainability, future-proofing and project scope
 
-**No framework, no build step.** The site is plain HTML, CSS and a single
-47-line script. There are no dependencies to update, nothing to compile, and
-nothing that will stop working when a framework changes version. Any page can
-be opened directly in a browser.
+**No framework, no build step, no third parties.** The site is plain HTML,
+CSS and a single 47-line script, with its fonts and images stored alongside it.
+There are no dependencies to update, nothing to compile, and no outside service
+whose shutdown or change of terms could break it. Any page can be opened
+directly in a browser, with or without a network connection.
 
 **The test suite makes the site maintainable.** `tests/site-check.mjs` re-runs
 every check in about a minute. Anyone changing the site later can confirm they
@@ -236,6 +256,11 @@ missing nav state and the long sentences — problems a person could easily
 overlook across seven pages. But the most serious defect, alt text describing
 people who weren't in a photograph, passed every automated check. Neither
 method alone would have been enough.
+
+**Writing the discussion was itself a form of testing.** The font privacy
+problem was not found by any test — it surfaced while writing §6, by asking
+what data the site sends and to whom. Once found, it became a test, so it
+cannot quietly come back.
 
 **Passing a test and being good enough are different things.** The menu button
 passed the 24px minimum, and was enlarged anyway because of how important it
